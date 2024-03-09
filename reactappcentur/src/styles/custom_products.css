@@ -38,3 +38,10 @@
     font-size: 18px;
     margin-bottom: 5px;
 }
+
+.tableth_productdetails {
+    /* width: 4%; */
+    font-family: Calibri, sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+}

@@ -5,6 +5,7 @@ import spinner from '../web_images/spinner.svg';
 import '../styles/custom_contact.css'
 import Footer from "./Footer";
 import CompanyLocation from "./CompanyLocation"
+import { apiUrl } from "../services/BackendAPIUrl";
 
 export default function Contact(){
 
@@ -14,7 +15,7 @@ export default function Contact(){
 
         const getContactDetails = async () => {
             try {
-                const response = await axios.get('http://127.0.0.1:9000/api/getcontactdetails');
+                const response = await axios.get(apiUrl+'api/getcontactdetails');
                 setContactDetails(response.data.contactdetails);
                 console.log(response.data);
             } catch (e) {

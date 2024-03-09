@@ -5,6 +5,7 @@ import Menu from './Menu'
 import spinner from '../web_images/spinner.svg';
 import '../styles/custom_clients.css'
 import Footer from "./Footer";
+import { apiUrl } from "../services/BackendAPIUrl";
 
 export default function Clients(){
 
@@ -13,7 +14,7 @@ export default function Clients(){
     useEffect(() => {
         const fetchAllClients = async () => {
             try {
-                const response = await axios.get('http://127.0.0.1:9000/api/getallclients');
+                const response = await axios.get(apiUrl+'api/getallclients');
                 console.log(response.data)
                 setclients(response.data.clients);
             } catch (error) {

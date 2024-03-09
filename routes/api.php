@@ -31,3 +31,4 @@ Route::get('/getallclients', [CustomController::class, 'getallclients']);
 Route::get('/getmissionvision', [CustomController::class, 'getmissionvision']);
 Route::get('/getcompanyhistory', [CustomController::class, 'getcompanyhistory']);
 Route::get('/getcontactdetails', [CustomController::class, 'getcontactdetails']);
+Route::get('/getallservices', [CustomController::class, 'getallservices']);

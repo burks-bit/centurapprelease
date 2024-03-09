@@ -4,6 +4,7 @@ import Menu from './Menu'
 import '../styles/custom_about.css'
 import { Fade } from "react-awesome-reveal";
 import Footer from "./Footer";
+import { apiUrl } from "../services/BackendAPIUrl";
 
 export default function About(){
 
@@ -13,11 +14,11 @@ export default function About(){
     useEffect(() => {
         const fetchCompanyHistory = async () => {
             try {
-                const missionVisionResponse = await axios.get('http://127.0.0.1:9000/api/getmissionvision');
+                const missionVisionResponse = await axios.get(apiUrl+'api/getmissionvision');
                 // console.log(missionVisionResponse.data);
                 setWebdata(missionVisionResponse.data.missionvision);
     
-                const companyHistoryResponse = await axios.get('http://127.0.0.1:9000/api/getcompanyhistory');
+                const companyHistoryResponse = await axios.get(apiUrl+'api/getcompanyhistory');
                 // console.log(companyHistoryResponse.data);
                 setCompanyHistory(companyHistoryResponse.data.companyhistorydtl);
             } catch (error) {

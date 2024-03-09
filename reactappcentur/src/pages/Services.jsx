@@ -4,6 +4,7 @@ import Menu from './Menu'
 import '../styles/custom_services.css'
 import spinner from '../web_images/spinner.svg';
 import Footer from "./Footer";
+import { apiUrl } from "../services/BackendAPIUrl";
 
 export default function Services(){
 
@@ -13,7 +14,7 @@ export default function Services(){
 
         const getAllServices = async () => {
             try {
-                const response = await axios.get('http://127.0.0.1:9000/api/getallservices');
+                const response = await axios.get(apiUrl+'api/getallservices');
                 setServices(response.data.servicedetails);
                 console.log(response.data);
             } catch (e) {

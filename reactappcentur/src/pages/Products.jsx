@@ -5,6 +5,7 @@ import Footer from './Footer';
 import spinner from '../web_images/spinner.svg';
 import { Link } from 'react-router-dom';
 import '../styles/custom_products.css'
+import { apiUrl } from '../services/BackendAPIUrl';
 
 export default function Products(){
 
@@ -13,7 +14,7 @@ export default function Products(){
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-                const response = await axios.get('http://127.0.0.1:9000/api/getallproducts');
+                const response = await axios.get(apiUrl+'api/getallproducts');
                 console.log(response.data)
                 setProducts(response.data.products);
             } catch (error) {

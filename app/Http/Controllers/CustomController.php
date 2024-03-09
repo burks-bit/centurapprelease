@@ -164,6 +164,20 @@ class CustomController extends Controller
             'contactdetails' => $contactdetails
         ]);
     }
+
+    public function getallservices(){
+
+        $services = DB::table('services')->where('enabled', 1)->get();
+        foreach($services as $serviceskey => $services){
+            
+        }
+        $servicedetails = array($services);
+
+        return response()->json([
+            'status' => 'success',
+            'servicedetails' => $servicedetails
+        ]);
+    }
 }
 
 

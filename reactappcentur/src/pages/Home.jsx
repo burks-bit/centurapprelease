@@ -5,11 +5,15 @@ import { Link } from 'react-router-dom';
 import Menu from './Menu';
 import Footer from './Footer';
 import CompanyLocation from './CompanyLocation';
+import { apiUrl } from "../services/BackendAPIUrl";
 // import Navbar from './Navbar';
 // import centurLogo from '../web_images/centurlogo.png';
 
+
+
 export default function Home(){
 
+    // console.log({apiUrl});
     const [data, setData] = useState([]);
     const [currentIndex, setCurrentIndex] = useState(0);
     const [products, setProducts] = useState([]);
@@ -18,13 +22,13 @@ export default function Home(){
     useEffect(() => {
         const fetchWebAppInfos = async () => {
           try {
-            const getwebdata = await axios.get('http://127.0.0.1:9000/api/getwebdata');
+            const getwebdata = await axios.get(apiUrl+'api/getwebdata');
             setData(getwebdata.data.webdata);
 
-            const getproducts = await axios.get('http://127.0.0.1:9000/api/getproducts');
+            const getproducts = await axios.get(apiUrl+'api/getproducts');
             setProducts(getproducts.data.products);
 
-            const getclients = await axios.get('http://127.0.0.1:9000/api/getclients');
+            const getclients = await axios.get(apiUrl+'api/getclients');
             setclients(getclients.data.clients);
           } catch (error) {
             console.error('Error fetching data:', error);

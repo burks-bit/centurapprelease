@@ -4,6 +4,7 @@ import Menu from './Menu';
 import { Link, useParams } from 'react-router-dom';
 import spinner from '../web_images/spinner.svg';
 import Footer from './Footer';
+import { apiUrl } from '../services/BackendAPIUrl';
 
 export default function ProductDetails(){
     
@@ -13,7 +14,7 @@ export default function ProductDetails(){
     useEffect(() => {
         const fetchProduct = async () => {
           try {
-            const response = await axios.get(`http://127.0.0.1:9000/api/getspecificproduct/${id}`);
+            const response = await axios.get(`${apiUrl}api/getspecificproduct/${id}`);
             console.log(response.data)
             setProduct(response.data.products);
           } catch (error) {
@@ -48,19 +49,19 @@ export default function ProductDetails(){
                                                 </thead>
                                                 <tbody>
                                                     <tr>
-                                                        <td style={{fontWeight: '800', Width: '4%'}}>Product Name:</td>
+                                                        <td className="tableth_productdetails">Product Name:</td>
                                                         <td>{product.product_name}</td>
                                                     </tr>
                                                     <tr>
-                                                        <td style={{fontWeight: '800'}}>Product Model:</td>
+                                                        <td className="tableth_productdetails">Product Model:</td>
                                                         <td>{product.product_model}</td>
                                                     </tr>
                                                     <tr>
-                                                        <td style={{fontWeight: '800'}}>Product Description:</td>
+                                                        <td className="tableth_productdetails">Product Description:</td>
                                                         <td style={{paddingLeft: '20px'}} dangerouslySetInnerHTML={{ __html: product.product_description }} />
                                                     </tr>
                                                     <tr>
-                                                        <td style={{fontWeight: '800'}}>Product Manufacturer:</td>
+                                                        <td className="tableth_productdetails">Product Manufacturer:</td>
                                                         <td>{product.product_manufacturer}</td>
                                                     </tr>
                                                     {/* Additional rows */}
