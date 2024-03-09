@@ -1,0 +1,33 @@
+.about_h1 {
+    padding-top: 50px;
+    color: rgb(45, 45, 45);
+}
+
+.aboutMission {
+    margin-top: 40px;
+}
+
+.aboutVision {
+    margin-top: 40px;
+}
+
+.ourStory {
+    margin-top: 6%;
+    padding-top: 5px;
+    padding-right: 50px;
+    padding-left: 50px;
+    padding-bottom: 50px;
+    border-radius: 50px;
+    background-color: #f0faff;
+}
+
+.ourStory p {
+    margin-top: 1%;
+    padding: 5px;
+    line-height: 20px;
+    text-align: center;
+}
+
+.story {
+    width: 50px;
+}

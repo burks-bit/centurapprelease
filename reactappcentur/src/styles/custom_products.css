@@ -1,0 +1,40 @@
+.products_h1 {
+    padding-top: 50px;
+    color: rgb(45, 45, 45);
+}
+
+.slide-title-product-page {
+    font-weight: 800;
+    color:#ed5050;
+    margin-top: 10px;
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+.slide-model-product-page {
+    font-size: 14px;
+    color: #777;
+}
+
+.product-box-product-page {
+    text-align: center;
+}
+
+.product-box-product-page:hover {
+    transition: 0.5s;
+    box-shadow: 2px 0 10px 0 rgb(198, 198, 198);
+}
+
+.product-box-productdetails-page {
+    padding: 5px;
+    box-shadow: 2px 0 10px 0 rgb(198, 198, 198);
+}
+
+.slide-title-productlist-page {
+    font-family: Calibri, sans-serif;
+    font-weight: 800;
+    color:#055da4;
+    margin-top: 0px;
+    font-size: 18px;
+    margin-bottom: 5px;
+}
