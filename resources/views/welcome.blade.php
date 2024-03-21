@@ -53,18 +53,7 @@
         </div>
     </section>
 
-    <section class="section2" id="about">
-        <div class="div_header_section2">
-            <h1>Mission</h1>
-            <p>{{ $mission->mission }}</p>
-        </div>
-        
-        <div class="div_header_section2vision">
-            <h1>Vision</h1>
-            <p>{{ $vision->vision }}</p>
-        </div>
-    </section>
-
+   
     <section class="section3" id="services">
         <div class="div_header_section3 reveal">
             <h1>Our Services</h1>

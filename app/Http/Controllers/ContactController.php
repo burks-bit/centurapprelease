@@ -101,7 +101,7 @@ class ContactController extends Controller
 
         $contact->enabled = $request->has('enabled') ? 1 : 0;
 
-        $contact->save(); 
+        $contact->save();
 
         return redirect()->route('contacts.index')
             ->with('success', 'Contact updated successfully.');

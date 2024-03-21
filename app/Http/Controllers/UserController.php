@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
    
 use App\Models\User;
-use Illuminate\Http\Request;
+use Illuminate\Http\Request;use Illuminate\Support\Facades\Auth;
   
 class UserController extends Controller
 {
@@ -103,5 +103,32 @@ class UserController extends Controller
     
         return redirect()->route('users.index')
                         ->with('success','User deleted successfully');
+    }
+
+    public function AdministratorLogin(Request $request)
+    {
+        // Validate request data
+        $credentials = $request->validate([
+            'email' => 'required|string|email',
+            'password' => 'required|string',
+        ]);
+
+        if (Auth::attempt($credentials)) {
+            $user = Auth::user();
+            return response()->json(['success' => true, 'user' => $user], 200);
+        } else {
+            return response()->json(['success' => false, 'message' => 'Invalid Email or password'], 401);
+        }
+    }
+
+    public function AdministratorLogout(Request $request)
+    {
+        Auth::logout();
+
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
+        return response()->json(['success' => true, 'message' => 'Logged out successfully'], 200);
     }
 }

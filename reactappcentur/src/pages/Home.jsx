@@ -55,10 +55,12 @@ export default function Home(){
                     <div className="div_header_section1">
                         <img src="http://127.0.0.1:9000/web_images/centurlogo.png" className="ui centered image small" alt=""/>
                         {data.map(header => (
-                            <h1 key={header.id}>{header.header_title}</h1>
+                            // <h1 key={header.id}>{header.header_title}</h1>
+                            <h1 dangerouslySetInnerHTML={{ __html: header.header_title }} />
                         ))}
                         {data.map(header => (
-                            <p key={header.id}>{header.header_body}</p>
+                            // <p key={header.id}>{header.header_body}</p>
+                            <p dangerouslySetInnerHTML={{ __html: header.header_body }} />
                         ))}
                     </div>
                 </Fade>

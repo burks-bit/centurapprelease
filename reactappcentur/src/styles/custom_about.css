@@ -31,3 +31,11 @@
 .story {
     width: 50px;
 }
+
+.textarea-transition {
+    transition: height 0.s ease; /* You can adjust the duration and easing function */
+  }
+  
+  .textarea-expanded {
+    height: 200px; /* Set the initial height of the textarea when expanded */
+  }

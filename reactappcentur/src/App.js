@@ -11,6 +11,16 @@ import Contact from './pages/Contact';
 import About from './pages/About';
 import Services from './pages/Services';
 import Clients from './pages/Clients';
+import Administrator from './admin/Administrator';
+import IndexHeader from './admin/header-management/IndexHeader';
+import IndexAbout from './admin/about-management/IndexAbout';
+import IndexProduct from './admin/product-management/IndexProduct';
+import IndexService from './admin/services-management/IndexService';
+import IndexClient from './admin/client-management/IndexClient';
+import IndexContact from './admin/contacts-management/IndexContact';
+import IndexCareer from './admin/career-management/IndexCareer';
+import Login from './auth/Login';
+import AdminProductDetails from './admin/product-management/AdminProductDetails';
 // import CompanyLocation from './pages/CompanyLocation';
 
 function App() {
@@ -25,7 +35,17 @@ function App() {
           <Route path="/services" element={<Services />} />
           <Route path="/clients" element={<Clients />} />
           <Route path="/contactus" element={<Contact />} />
-          {/* <Route path="/loc" element={<CompanyLocation />} /> */}
+          <Route path="/centurmanagement/admin-login" element={<Login />} />
+          <Route path="/centurmanagement/admin-dashboard" element={<Administrator />} />
+          <Route path="/centurmanagement/header-management" element={<IndexHeader />} />
+          <Route path="/centurmanagement/about-management" element={<IndexAbout />} />
+          <Route path="/centurmanagement/products-management" element={<IndexProduct />} />
+          <Route path="/centurmanagement/services-management" element={<IndexService />} />
+          <Route path="/centurmanagement/client-management" element={<IndexClient />} />
+          <Route path="/centurmanagement/contacts-management" element={<IndexContact />} />
+          <Route path="/centurmanagement/careers-management" element={<IndexCareer />} />
+          <Route path="/centurmanagement/career-management" element={<IndexCareer />} />
+          <Route path="/centurmanagement/products-management/product-details/:id" element={<AdminProductDetails />} />
         </Routes>
       </Router>
     </div>
