@@ -21,6 +21,8 @@ import IndexContact from './admin/contacts-management/IndexContact';
 import IndexCareer from './admin/career-management/IndexCareer';
 import Login from './auth/Login';
 import AdminProductDetails from './admin/product-management/AdminProductDetails';
+import AdminCareerDetails from './admin/career-management/AdminCareerDetails';
+import AdminCareerAdd from './admin/career-management/AdminCareerAdd';
 // import CompanyLocation from './pages/CompanyLocation';
 
 function App() {
@@ -44,7 +46,8 @@ function App() {
           <Route path="/centurmanagement/client-management" element={<IndexClient />} />
           <Route path="/centurmanagement/contacts-management" element={<IndexContact />} />
           <Route path="/centurmanagement/careers-management" element={<IndexCareer />} />
-          <Route path="/centurmanagement/career-management" element={<IndexCareer />} />
+          <Route path="/centurmanagement/careers-management/add" element={<AdminCareerAdd />} />
+          <Route path="/centurmanagement/careers-management/career-details/:id" element={<AdminCareerDetails />} />
           <Route path="/centurmanagement/products-management/product-details/:id" element={<AdminProductDetails />} />
         </Routes>
       </Router>

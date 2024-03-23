@@ -7,6 +7,7 @@ use App\Models\Contact;
 use App\Models\Header;
 use App\Models\Mission;
 use App\Models\Product;
+use App\Models\Career;
 use App\Models\Service;
 use App\Models\Vision;
 use Illuminate\Http\Request;
@@ -181,9 +182,26 @@ class CustomController extends Controller
         ]);
     }
 
+    public function addnewmgmtheader(Request $request){
+
+        // Create a new Career instance
+        $header = new Header();
+        $header->header_title = $request->input('header_title');
+        $header->header_body = $request->input('header_body');
+        $header->enabled = $request->input('enabled') ? 1 : 0;
+
+        // Save the career
+        $header->save();
+
+        // Optionally, you can return a response indicating success
+        return response()->json(['message' => 'Header added successfully'], 201);
+    }
+
     public function getHeader(){
 
-        $headers = DB::table('headers')->where('enabled', 1)->get();
+        $headers = DB::table('headers')->get();
+
+        Log::info($headers);
         
         $tmpdata = array();
         foreach($headers as $headerkey => $header){
@@ -193,7 +211,7 @@ class CustomController extends Controller
         
         return response()->json([
             'status' => 'success',
-            'header' => $webdatas
+            'header' => $headers
         ]);
     }
 
@@ -202,6 +220,7 @@ class CustomController extends Controller
         $header = Header::findOrFail($id); 
         $header->header_title = $request->input('header_title');
         $header->header_body = $request->input('header_body');
+        $header->enabled = $request->input('enabled') ? 1 : 0;
 
         if($header->save()) {
             return response()->json([
@@ -212,15 +231,38 @@ class CustomController extends Controller
         }
     }
 
+    public function deletemgmtheader($id)
+    {
+        try {
+            $header = Header::findOrFail($id);
+            $header->delete();
+            return response()->json(['message' => 'Header deleted successfully'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Failed to delete header', 'error' => $e->getMessage()], 500);
+        }
+    }
+    
+    public function addnewmgmtmission(Request $request){
+
+        $mission = new Mission();
+        $mission->mission = $request->input('mission');
+        $mission->enabled = $request->input('enabled') ? 1 : 0;
+
+        $mission->save();
+
+        // Optionally, you can return a response indicating success
+        return response()->json(['message' => 'Mission added successfully'], 201);
+    }
+
     public function getMgmtMission(){
 
-        $missions = DB::table('missions')->where('enabled', 1)->get();
+        $missions = DB::table('missions')->get();
         
-        $tmpdata = array();
-        foreach($missions as $missionskey => $mission){
-            // $tmpdata['allwebdata'] = $header;
-        }
-        $missions = array($mission);
+        // $tmpdata = array();
+        // foreach($missions as $missionskey => $mission){
+        //     // $tmpdata['allwebdata'] = $header;
+        // }
+        // $missions = array($mission);
         
         return response()->json([
             'status' => 'success',
@@ -230,12 +272,11 @@ class CustomController extends Controller
 
     public function updateMgmtMission(Request $request, $id){
 
-        Log::info($request);
+        $mission = Mission::findOrFail($id); 
+        $mission->mission = $request->input('mission');
+        $mission->enabled = $request->input('enabled') ? 1 : 0;
 
-        $header = Mission::findOrFail($id); 
-        $header->mission = $request->input('mission');
-
-        if($header->save()) {
+        if($mission->save()) {
             return response()->json([
                 'status' => 'success'
             ]);
@@ -244,15 +285,38 @@ class CustomController extends Controller
         }
     }
 
+    public function deletemgmtmission($id)
+    {
+        try {
+            $mission = Mission::findOrFail($id);
+            $mission->delete();
+            return response()->json(['message' => 'Mission deleted successfully'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Failed to delete mission', 'error' => $e->getMessage()], 500);
+        }
+    }
+
+    public function addnewmgmtvision(Request $request){
+
+        $vision = new Vision();
+        $vision->vision = $request->input('vision');
+        $vision->enabled = $request->input('enabled') ? 1 : 0;
+
+        $vision->save();
+
+        // Optionally, you can return a response indicating success
+        return response()->json(['message' => 'Vision added successfully'], 201);
+    }
+
     public function getMgmtVision(){
 
-        $visions = DB::table('visions')->where('enabled', 1)->get();
+        $visions = DB::table('visions')->get();
         
-        $tmpdata = array();
-        foreach($visions as $visionskey => $vision){
-            // $tmpdata['allwebdata'] = $header;
-        }
-        $visions = array($vision);
+        // $tmpdata = array();
+        // foreach($visions as $visionskey => $vision){
+        //     // $tmpdata['allwebdata'] = $header;
+        // }
+        // $visions = array($vision);
         
         return response()->json([
             'status' => 'success',
@@ -264,6 +328,7 @@ class CustomController extends Controller
 
         $visions = Vision::findOrFail($id); 
         $visions->vision = $request->input('vision');
+        $visions->enabled = $request->input('enabled') ? 1 : 0;
 
         if($visions->save()) {
             return response()->json([
@@ -274,15 +339,38 @@ class CustomController extends Controller
         }
     }
 
+    public function deletemgmtvision($id)
+    {
+        try {
+            $vision = Vision::findOrFail($id);
+            $vision->delete();
+            return response()->json(['message' => 'Vision deleted successfully'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Failed to delete vision', 'error' => $e->getMessage()], 500);
+        }
+    }
+
+    public function addnewmgmtservice(Request $request){
+
+        $service = new Service();
+        $service->services = $request->input('services');
+        $service->enabled = $request->input('enabled') ? 1 : 0;
+
+        $service->save();
+
+        // Optionally, you can return a response indicating success
+        return response()->json(['message' => 'Services added successfully'], 201);
+    }
+
     public function getMgmtServices(){
 
-        $services = DB::table('services')->where('enabled', 1)->get();
+        $services = DB::table('services')->get();
         
-        $tmpdata = array();
-        foreach($services as $serviceskey => $service){
-            // $tmpdata['allwebdata'] = $header;
-        }
-        $services = array($service);
+        // $tmpdata = array();
+        // foreach($services as $serviceskey => $service){
+        //     // $tmpdata['allwebdata'] = $header;
+        // }
+        // $services = array($service);
         
         return response()->json([
             'status' => 'success',
@@ -294,6 +382,7 @@ class CustomController extends Controller
 
         $services = Service::findOrFail($id); 
         $services->services = $request->input('services');
+        $services->enabled = $request->input('enabled') ? 1 : 0;
 
         if($services->save()) {
             return response()->json([
@@ -304,15 +393,44 @@ class CustomController extends Controller
         }
     }
 
+    public function deletemgmtservices($id)
+    {
+        try {
+            $service = Service::findOrFail($id);
+            $service->delete();
+            return response()->json(['message' => 'Services deleted successfully'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Failed to delete vision', 'error' => $e->getMessage()], 500);
+        }
+    }
+    
+    public function addnewmgmtcontact(Request $request){
+
+        $contact = new Contact();
+        $contact->contact_no = $request->input('contact_no');
+        $contact->tel_no = $request->input('tel_no');
+        $contact->email = $request->input('email');
+        $contact->company_address = $request->input('company_address');
+        $contact->facebook_url = $request->input('facebook_url');
+        $contact->ig_url = $request->input('ig_url');
+        $contact->xtwitter_url = $request->input('xtwitter_url');
+        $contact->enabled = $request->input('enabled') ? 1 : 0;
+
+        $contact->save();
+
+        // Optionally, you can return a response indicating success
+        return response()->json(['message' => 'Contact added successfully'], 201);
+    }
+
     public function getMgmtContacts(){
 
-        $contacts = DB::table('contacts')->where('enabled', 1)->get();
+        $contacts = DB::table('contacts')->get();
         
-        $tmpdata = array();
-        foreach($contacts as $contactskey => $contact){
-            // $tmpdata['allwebdata'] = $header;
-        }
-        $contacts = array($contact);
+        // $tmpdata = array();
+        // foreach($contacts as $contactskey => $contact){
+        //     // $tmpdata['allwebdata'] = $header;
+        // }
+        // $contacts = array($contact);
         
         return response()->json([
             'status' => 'success',
@@ -341,9 +459,20 @@ class CustomController extends Controller
         }
     }
 
+    public function deletemgmtcontact($id)
+    {
+        try {
+            $contact = Contact::findOrFail($id);
+            $contact->delete();
+            return response()->json(['message' => 'Contact deleted successfully'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Failed to delete contact', 'error' => $e->getMessage()], 500);
+        }
+    }
+
     public function getMgmtProducts(){
 
-        $products = DB::table('products')->where('enabled', 1)->get();
+        $products = DB::table('products')->get();
         
         return response()->json([
             'status' => 'success',
@@ -352,9 +481,6 @@ class CustomController extends Controller
     }
 
     public function updateMgmtProducts(Request $request, $id){
-        $array = array($request);
-        Log::info($array);
-
         try {
             $product = Product::findOrFail($id);
             
@@ -363,21 +489,32 @@ class CustomController extends Controller
             $product->product_description = $request->input('product_description');
             $product->product_manufacturer = $request->input('product_manufacturer');
             $product->product_specimen_type = $request->input('product_specimen_type');
+            $product->enabled = $request->input('enabled') ? 1 : 0;
     
-            // Handling product image
-            if ($request->has('product_image')) {
+            if($request->has('product_image')){
                 $base64_image = $request->input('product_image');
-                // Extracting the image data
                 $image_parts = explode(";base64,", $base64_image);
                 $image_type_aux = explode("image/", $image_parts[0]);
                 $image_type = $image_type_aux[1];
                 $image_base64 = base64_decode($image_parts[1]);
                 $imageName = time().'.'.$image_type;
-                // Saving the image
                 file_put_contents(public_path('product_images/'.$imageName), $image_base64);
-                // Save only the filename to the product's product_image attribute
                 $product->product_image = $imageName;
+            } else {
+                $imageName = $product->product_image;
             }
+
+            // previous
+            // if ($request->has('product_image')) {
+            //     $base64_image = $request->input('product_image');
+            //     $image_parts = explode(";base64,", $base64_image);
+            //     $image_type_aux = explode("image/", $image_parts[0]);
+            //     $image_type = $image_type_aux[1];
+            //     $image_base64 = base64_decode($image_parts[1]);
+            //     $imageName = time().'.'.$image_type;
+            //     file_put_contents(public_path('product_images/'.$imageName), $image_base64);
+            //     $product->product_image = $imageName;
+            // }
             
             $product->save();
             
@@ -387,21 +524,86 @@ class CustomController extends Controller
         }
     }
 
-    public function updateMgmtProductImage(Request $request, $id){
-        $product = Product::findOrFail($id); 
+    // public function updateMgmtProductImage(Request $request, $id){
+    //     $product = Product::findOrFail($id); 
     
-        // Handle image upload
-        if($request->hasFile('product_image')) {
-            $image = $request->file('product_image');
-            $imageName = time().'.'.$image->getClientOriginalExtension();
-            $image->move(public_path('product_images'), $imageName);
-            $product->product_image = $imageName;
-        }
+    //     // Handle image upload
+    //     if($request->hasFile('product_image')) {
+    //         $image = $request->file('product_image');
+    //         $imageName = time().'.'.$image->getClientOriginalExtension();
+    //         $image->move(public_path('product_images'), $imageName);
+    //         $product->product_image = $imageName;
+    //     }
     
-        if($product->save()) {
+    //     if($product->save()) {
+    //         return response()->json([
+    //             'status' => 'success'
+    //         ]);
+    //     }
+    // }
+
+    public function getMgmtCareers(){
+
+        $careers = DB::table('careers')->get();
+
+        $careers = $careers->toArray();
+        
+        return response()->json([
+            'status' => 'success',
+            'career' => $careers
+        ]);
+    }
+
+    public function updateMgmtCareers(Request $request, $id){
+
+        $career = Career::findOrFail($id);
+
+        $career->title = $request->input('title');
+        $career->description = $request->input('description');
+        $career->status = $request->input('status');
+
+        if ($career->save()) {
             return response()->json([
                 'status' => 'success'
             ]);
+        } else {
+            // Handle error case
+        }
+    }
+
+    public function getspecificcareer($id){
+
+        $careers = DB::table('careers')->find($id);
+        
+        return response()->json([
+            'status' => 'success',
+            'careers' => $careers
+        ]);
+    }
+
+    public function addnewmgmtcareer(Request $request){
+
+        // Create a new Career instance
+        $career = new Career();
+        $career->title = $request->input('title');
+        $career->description = $request->input('description');
+        $career->status = $request->input('status');
+
+        // Save the career
+        $career->save();
+
+        // Optionally, you can return a response indicating success
+        return response()->json(['message' => 'Career added successfully'], 201);
+    }
+
+    public function deletemgmtcareer($id)
+    {
+        try {
+            $career = Career::findOrFail($id);
+            $career->delete();
+            return response()->json(['message' => 'Career deleted successfully'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Failed to delete career', 'error' => $e->getMessage()], 500);
         }
     }
 }

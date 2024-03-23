@@ -4,117 +4,102 @@ import Layout from "../../layout/Layout";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { apiUrl } from "../../services/BackendAPIUrl";
+import AdminCareerAdd from "./AdminCareerAdd";
 
 export default function IndexCareer() {
-
-    const [serviceData, serServiceData] = useState([]);
-    const [editMode, setEditMode] = useState(false);
-    const [editedService, setEditedService] = useState({ id: null, services: ''});
-    const [saving, setSaving] = useState(false);
+    const [careerData, setCareerData] = useState([]);
+    const [showAddForm, setShowAddForm] = useState(false); // State to manage the visibility of the add career form
 
     useEffect(() => {
-        const fetchServiceData = async () => {
+        const fetchCareerData = async () => {
             try {
-                const response = await axios.get(apiUrl + 'api/getmgmtservice');
-                console.log(response.data.service)
-                serServiceData(response.data.service);
+                const response = await axios.get(apiUrl + 'api/getmgmtcareer');
+                setCareerData(response.data.career);
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
         };
-        fetchServiceData();
+        fetchCareerData();
     }, []);
-
-    const handleEdit = (service) => {
-        setEditedService({ id: service.id, services: service.services});
-        setEditMode(true);
-    }
-
-    const handleSave = async () => {
-        try {
-            setSaving(true);
-            await axios.put(apiUrl + `api/updatemgmtservice/${editedService.id}`, {
-                services: editedService.services
-            });
-
-            const response = await axios.get(apiUrl + 'api/getmgmtservice');
-            serServiceData(response.data.service);
-
-            setEditMode(false);
-            setEditedService({ id: null, services: ''});
-        } catch (error) {
-            console.error('Error updating data:', error);
-        } finally {
-            setSaving(false);
-        }
-    }
-
-    const handleCancel = () => {
-        setEditMode(false);
-        setEditedService({ id: null, services: ''});
-    }
 
     const handleDelete = async (id) => {
         try {
-            await axios.delete(apiUrl + `api/deletemgmtservices/${id}`);
-            const updatedservicess = serviceData.filter(services => services.id !== id);
-            serServiceData(updatedservicess);
+            await axios.post(`${apiUrl}api/deletemgmtcareer/${id}`);
+            const updatedCareers = careerData.filter(career => career.id !== id);
+            setCareerData(updatedCareers);
         } catch (error) {
-            console.error('Error deleting data:', error);
+            console.error('Error deleting career:', error);
         }
     }
+
+    const handleAddButtonClick = () => {
+        setShowAddForm(true);
+    };
+
+    const handleCareerAdded = () => {
+        setShowAddForm(false);
+    };
+
+    const handleCancel = () => {
+        setShowAddForm(false); // Hide the add career form when the "Cancel" button is clicked
+    };
 
     return (
         <Layout>
             <div>
                 <h1>Career Management</h1>
-                {saving && (
-                    <div className="ui active centered inline loader"></div>
+                
+                {!showAddForm && (
+                    <button className="ui button" onClick={handleAddButtonClick}>
+                        Add
+                    </button>
                 )}
-                {!saving && (
+
+                {!showAddForm && (
                     <table className="ui table bordered">
                         <thead>
                             <tr>
                                 <th style={{ width: '50%' }}>Positions</th>
+                                <th style={{ width: '25%' }}>Availability</th>
                                 <th style={{ width: '25%' }}>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {serviceData.map(service => (
-                                <tr key={service.id}>
+                            {careerData.map(career => (
+                                <tr key={career.id}>
                                     <td style={{ width: '50%' }}>
-                                        {editMode && editedService.id === service.id ?
-                                            <ReactQuill
-                                                value={editedService.services}
-                                                onChange={(value) => setEditedService({ ...editedService, services: value })}
-                                            style={{height: '100%'}}/>
-                                            :
-                                            <div style={{paddingLeft:'30px'}} dangerouslySetInnerHTML={{ __html: service.services }} />
-                                        }
+                                        <div style={{paddingLeft:'30px', color: '#1371b6', fontWeight: 'bold'}}  dangerouslySetInnerHTML={{ __html: career.title }} />
                                     </td>
                                     <td style={{ width: '25%' }}>
-                                        {editMode && editedService.id === service.id ?
-                                            <div>
-                                                <button className="ui button primary" onClick={handleSave}>
-                                                    {saving ? "Saving..." : "Save"}
-                                                </button>
-                                                &ensp;
-                                                <button className="ui button" onClick={handleCancel}>Cancel</button>
-                                            </div>
-                                            :
-                                            <div>
-                                                <button className="ui button" onClick={() => handleEdit(service)}>Edit</button>
-                                                &ensp;
-                                                <button className="ui button red" onClick={() => handleDelete(service.id)}>Delete</button>
-                                            </div>
-                                        }
+                                        <div style={{ paddingLeft: '' }}>
+                                            <span style={{ color: career.status === 'closed' ? 'red' : 'green' }}>
+                                                {career.status}
+                                            </span>
+                                        </div>
+                                    </td>
+                                    <td style={{ width: '25%' }}>
+                                        <a href={`/centurmanagement/careers-management/career-details/${career.id}`} className="ui button">
+                                            View
+                                        </a>
+                                        &ensp;
+                                        <button className="ui button red" onClick={() => handleDelete(career.id)}>Delete</button>
                                     </td>
                                 </tr>
                             ))}
                         </tbody>
                     </table>
                 )}
+
+                {showAddForm && (
+                    <div>
+                        <AdminCareerAdd onCareerAdded={handleCareerAdded} />
+                        <br />
+                        <button className="ui button" onClick={handleCancel}>
+                            Cancel
+                        </button>
+                    </div>
+                )}
             </div>
         </Layout>
-    )
+    );
 }

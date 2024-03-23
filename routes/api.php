@@ -28,19 +28,39 @@ Route::post('/login', [UserController::class, 'AdministratorLogin']);
 Route::post('/logout', [UserController::class, 'AdministratorLogout']);
 
 // admin mgmt
+Route::post('/addnewmgmtheader', [CustomController::class, 'addnewmgmtheader']);
 Route::get('/getmgmtheader', [CustomController::class, 'getHeader']);
 Route::put('/updatemgmtheader/{id}', [CustomController::class, 'updateMgmtHeader']);
+Route::post('/deletemgmtheader/{id}', [CustomController::class, 'deletemgmtheader']);
+
+Route::post('/addnewmgmtmission', [CustomController::class, 'addnewmgmtmission']);
 Route::get('/getmgmtmission', [CustomController::class, 'getMgmtMission']);
 Route::put('/updatemgmtmission/{id}', [CustomController::class, 'updateMgmtMission']);
+Route::post('/deletemgmtmission/{id}', [CustomController::class, 'deletemgmtmission']);
+
+Route::post('/addnewmgmtvision', [CustomController::class, 'addnewmgmtvision']);
 Route::get('/getmgmtvision', [CustomController::class, 'getMgmtVision']);
 Route::put('/updatemgmtvision/{id}', [CustomController::class, 'updateMgmtVision']);
+Route::post('/deletemgmtvision/{id}', [CustomController::class, 'deletemgmtvision']);
+
+Route::post('/addnewmgmtservice', [CustomController::class, 'addnewmgmtservice']);
 Route::get('/getmgmtservice', [CustomController::class, 'getMgmtServices']);
 Route::put('/updatemgmtservice/{id}', [CustomController::class, 'updateMgmtServices']);
+Route::post('/deletemgmtservices/{id}', [CustomController::class, 'deletemgmtservices']);
+
+Route::post('/addnewmgmtcontact', [CustomController::class, 'addnewmgmtcontact']);
 Route::get('/getmgmtcontact', [CustomController::class, 'getMgmtContacts']);
 Route::put('/updatemgmtcontact/{id}', [CustomController::class, 'updateMgmtContacts']);
+Route::post('/deletemgmtcontact/{id}', [CustomController::class, 'deletemgmtcontact']);
+
 Route::get('/getmgmtproduct', [CustomController::class, 'getMgmtProducts']);
 Route::put('/updatemgmtproduct/{id}', [CustomController::class, 'updateMgmtProducts']);
-Route::put('/updatemgmtproductimage/{id}', [CustomController::class, 'updateMgmtProductImage']);
+
+Route::get('/getmgmtcareer', [CustomController::class, 'getMgmtCareers']);
+Route::get('/getspecificcareer/{id}', [CustomController::class, 'getspecificcareer']);
+Route::put('/updatemgmtcareer/{id}', [CustomController::class, 'updateMgmtCareers']);
+Route::post('/addnewmgmtcareer', [CustomController::class, 'addnewmgmtcareer']);
+Route::post('/deletemgmtcareer/{id}', [CustomController::class, 'deletemgmtcareer']);
 
 
 // viewing
