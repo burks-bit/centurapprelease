@@ -23,6 +23,11 @@ import Login from './auth/Login';
 import AdminProductDetails from './admin/product-management/AdminProductDetails';
 import AdminCareerDetails from './admin/career-management/AdminCareerDetails';
 import AdminCareerAdd from './admin/career-management/AdminCareerAdd';
+import IndexHistory from './admin/companyhistory-management/IndexHisotry';
+import Careers from './pages/Career';
+import AdminTestimonialAdd from './admin/testimonials-management/AdminTestimonialAdd';
+import IndexTestimonial from './admin/testimonials-management/IndexTestimonial';
+import AdminTestimonialDetails from './admin/career-management/AdminCareerDetails';
 // import CompanyLocation from './pages/CompanyLocation';
 
 function App() {
@@ -36,11 +41,13 @@ function App() {
           <Route path="/products/details/:id" element={<ProductDetails />} />
           <Route path="/services" element={<Services />} />
           <Route path="/clients" element={<Clients />} />
+          <Route path="/careers" element={<Careers />} />
           <Route path="/contactus" element={<Contact />} />
           <Route path="/centurmanagement/admin-login" element={<Login />} />
           <Route path="/centurmanagement/admin-dashboard" element={<Administrator />} />
           <Route path="/centurmanagement/header-management" element={<IndexHeader />} />
           <Route path="/centurmanagement/about-management" element={<IndexAbout />} />
+          <Route path="/centurmanagement/history-management" element={<IndexHistory />} />
           <Route path="/centurmanagement/products-management" element={<IndexProduct />} />
           <Route path="/centurmanagement/services-management" element={<IndexService />} />
           <Route path="/centurmanagement/client-management" element={<IndexClient />} />
@@ -49,6 +56,9 @@ function App() {
           <Route path="/centurmanagement/careers-management/add" element={<AdminCareerAdd />} />
           <Route path="/centurmanagement/careers-management/career-details/:id" element={<AdminCareerDetails />} />
           <Route path="/centurmanagement/products-management/product-details/:id" element={<AdminProductDetails />} />
+          <Route path="/centurmanagement/testimonials-management" element={<IndexTestimonial />} />
+          <Route path="/centurmanagement/testimonials-management/add" element={<AdminTestimonialAdd />} />
+          <Route path="/centurmanagement/testimonials-management/testimonial-details/:id" element={<AdminTestimonialDetails />} />
         </Routes>
       </Router>
     </div>

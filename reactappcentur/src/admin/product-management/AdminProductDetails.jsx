@@ -6,6 +6,7 @@ import spinner from "../../web_images/spinner.svg"; // Path to your spinner imag
 import { apiUrl } from "../../services/BackendAPIUrl";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import { Icon } from 'semantic-ui-react';
 
 export default function AdminProductDetails(){
 
@@ -176,18 +177,18 @@ export default function AdminProductDetails(){
                                     <div style={{marginTop: '20px'}}>
                                         {editMode ? (
                                             <div>
-                                                <button className="ui button primary" onClick={handleSaveButtonClick}>Save</button>
-                                                <button className="ui button" onClick={handleCancel}>Cancel</button>
+                                                <button className="ui button tiny primary" onClick={handleSaveButtonClick}><Icon name='save'/> Save</button>
+                                                <button className="ui button tiny" onClick={handleCancel}><Icon name='cancel'/> Cancel</button>
                                             </div>
                                         ) : (
-                                            <button className="ui button" onClick={handleEditButtonClick}>Edit</button>
+                                            <button className="ui tiny button" onClick={handleEditButtonClick}><Icon name='edit' /> Edit Details</button>
                                         )}
                                     </div>
                                 </div>
                             </div>
                             <div>
                                 <br />
-                                <Link to="/centurmanagement/products-management" className="ui small default button" style={{marginTop: '50px'}}><i className="left chevron icon"></i> Back</Link>
+                                <Link to="/centurmanagement/products-management" className="ui tiny button" style={{marginTop: '50px'}}><i className="left chevron icon"></i> Back</Link>
                             </div>
                         </div>
                     ) : (

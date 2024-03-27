@@ -6,6 +6,7 @@ import spinner from '../web_images/spinner.svg';
 import { Link } from 'react-router-dom';
 import '../styles/custom_products.css'
 import { apiUrl } from '../services/BackendAPIUrl';
+import { Icon } from 'semantic-ui-react';
 
 export default function Products(){
 
@@ -29,7 +30,7 @@ export default function Products(){
         <div>
             <Menu />
             <div className='ui container'>
-                <h1 className='products_h1'>Products</h1>
+                <h1 className='products_h1'><Icon name='tags' size='large' color='green' /> Products</h1>
                 <p>
                 Explore our wide range of high-quality products designed to meet your needs. From innovative solutions to everyday essentials, we have something for everyone. Whether you're a business looking to streamline operations or an individual seeking top-notch products, we've got you covered. Browse our offerings below and discover what sets us apart.
                 </p>
@@ -64,7 +65,7 @@ export default function Products(){
                                 <div key={columnIndex} className="column">
                                     {/* <Link to={`/products/details/${product.id}`}> */}
                                         <div className="ui segment product-box-product-page">
-                                            <img src={`http://127.0.0.1:9000/product_images/${product.product_image}`} alt={product.product_image} className='product-image'/>
+                                            <img src={apiUrl+`product_images/${product.product_image}`} alt={product.product_image} className='product-image'/>
                                         </div>
                                         <div className="ui two column doubling stackable grid">
                                             <div className="column">

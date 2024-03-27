@@ -5,6 +5,7 @@ import '../styles/custom_services.css'
 import spinner from '../web_images/spinner.svg';
 import Footer from "./Footer";
 import { apiUrl } from "../services/BackendAPIUrl";
+import { Icon } from "semantic-ui-react";
 
 export default function Services(){
 
@@ -30,7 +31,7 @@ export default function Services(){
         <div>
             <Menu />
             <div className="ui container">
-                <h1 className="services_h1">Our Services</h1>
+                <h1 className="services_h1"><Icon name='list alternate' size='large' color='green' /> Our Services</h1>
                 <p>
                 At Centur Healthcare Trading Corp, we're dedicated to providing top-notch services to meet your medical needs. From equipment provisioning to troubleshooting and supplying reagents, we offer comprehensive solutions tailored to your requirements. Whether you're a healthcare facility, laboratory, or medical professional, we're here to support you every step of the way. Explore our services below and discover how we can help you succeed.
                 </p>

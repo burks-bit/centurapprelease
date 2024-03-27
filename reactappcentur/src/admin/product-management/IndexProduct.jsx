@@ -4,10 +4,13 @@ import Layout from "../../layout/Layout";
 import spinner from "../../web_images/spinner.svg"; // Path to your spinner image
 import { Link } from "react-router-dom"; // Assuming you're using React Router
 import { apiUrl } from "../../services/BackendAPIUrl";
+import {Icon} from 'semantic-ui-react'
+import AdminProductAdd from "./AdminProductAdd";
 
 export default function IndexProduct() {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [showForm, setShowAddForm] = useState(false);
 
     useEffect(() => {
         axios.get(apiUrl+'api/getmgmtproduct')
@@ -26,6 +29,13 @@ export default function IndexProduct() {
             });
     }, []);
 
+    const handleAddProductButtonClick = () => {
+        setShowAddForm(true);
+    };
+    const handleCancel = () => {
+        setShowAddForm(false); // Hide the add career form when the "Cancel" button is clicked
+    };
+
     // Function to render individual product cards
     const renderProductCard = (product) => (
         <div key={product.id} className="column">
@@ -39,7 +49,7 @@ export default function IndexProduct() {
                 </div>
                 <div className="column" style={{textAlign: 'right'}}>
                     <Link to={`/centurmanagement/products-management/product-details/${product.id}`}>
-                        <button className="ui mini inverted red button">See Details <i className="right chevron icon"></i></button>
+                        <button className="ui mini teal button"><Icon name="eye"/> See Details</button>
                     </Link>
                 </div>
             </div>
@@ -57,17 +67,43 @@ export default function IndexProduct() {
         ));
     };
 
+    const handleCareerAdded = () => {
+        setShowAddForm(false);
+    };
+
     return (
         <Layout>
             <div>
                 <h1>Products Management</h1>
-                {loading ? (
-                    <div className="" style={{textAlign: 'center', alignItems: 'center', justifyContent: 'center', marginTop: '15%'}}>
-                        <img src={spinner} alt="Logo" className="ui centered" />
+                {!showForm && (
+                    <button className="ui button tiny teal" onClick={handleAddProductButtonClick}>
+                        <Icon name="plus square"/> Add Product
+                    </button>
+                )}
+
+                {!showForm && (
+                    <div>
+                        {loading ? (
+                            <div className="" style={{textAlign: 'center', alignItems: 'center', justifyContent: 'center', marginTop: '15%'}}>
+                            <br />
+                                <img src={spinner} alt="Logo" className="ui centered" />
+                            </div>
+                        ) : (
+                            <div className="product-container">
+                            <br />
+                                {renderProductRows()}
+                            </div>
+                        )}
                     </div>
-                ) : (
-                    <div className="product-container">
-                        {renderProductRows()}
+                )}
+
+                {showForm && (
+                    <div>
+                        <AdminProductAdd onCareerAdded={handleCareerAdded} />
+                        <br />
+                        <button className="ui button tiny" onClick={handleCancel}>
+                            <Icon name="cancel"/> Cancel
+                        </button>
                     </div>
                 )}
             </div>

@@ -5,12 +5,11 @@ import spinner from "../../web_images/spinner.svg"; // Path to your spinner imag
 import { apiUrl } from "../../services/BackendAPIUrl";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import { Icon } from 'semantic-ui-react';
 
-export default function AdminServiceAdd(){
+export default function AdminhistoryAdd(){
     
-    const [services, setServices] = useState({
-        services: '',
+    const [history, setHistory] = useState({
+        company_history: '',
         enabled: '',
     });
 
@@ -18,16 +17,16 @@ export default function AdminServiceAdd(){
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setServices(prevState => ({
+        setHistory(prevState => ({
             ...prevState,
             [name]: value
         }));
     };
 
-    const handleservicesbodyChange = (value) => {
-        setServices(prevState => ({
+    const handlehistorybodyChange = (value) => {
+        setHistory(prevState => ({
             ...prevState,
-            services: value
+            company_history: value
         }));
     };
 
@@ -35,24 +34,24 @@ export default function AdminServiceAdd(){
         e.preventDefault();
         setLoading(true);
         try {
-            await axios.post(`${apiUrl}api/addnewmgmtservice`, services);
+            await axios.post(`${apiUrl}api/addnewmgmthistory`, history);
             window.location.reload();
         } catch (error) {
-            console.error('Error adding services:', error);
-            alert('Failed to add services. Please try again.');
+            console.error('Error adding history:', error);
+            alert('Failed to add history. Please try again.');
         }
         setLoading(false);
     };
 
     return (
             <div>
-                <h4>Services Management > Add New Services</h4>
+                <h1>Add history</h1>
                 <form onSubmit={handleSubmit} className='ui form'>
                     <div>
-                        <label>Services:</label>
+                        <label>History Body:</label>
                         <ReactQuill
-                            value={services.services}
-                            onChange={handleservicesbodyChange}
+                            value={history.company_history}
+                            onChange={handlehistorybodyChange}
                         />
                     </div>
                     <div>
@@ -61,15 +60,15 @@ export default function AdminServiceAdd(){
                             <input
                                 type="checkbox"
                                 name="enabled"
-                                checked={services.enabled === '1'} // Assuming '1' represents true and '0' represents false
-                                onChange={(e) => setServices(prevState => ({ ...prevState, enabled: e.target.checked ? '1' : '0' }))}
+                                checked={history.enabled === '1'} // Assuming '1' represents true and '0' represents false
+                                onChange={(e) => setHistory(prevState => ({ ...prevState, enabled: e.target.checked ? '1' : '0' }))}
                             />
                             <label>Enabled</label>
                         </div>
                     </div>
                     <br />
-                    <button type="submit" className='ui button tiny primary' disabled={loading}>
-                        <Icon name="cancel"/> {loading ? 'Saving... Please Wait!' : 'Add services'}
+                    <button type="submit" className='ui button primary' disabled={loading}>
+                        {loading ? 'Saving... Please Wait!' : 'Add history'}
                     </button>
                 </form>
             </div>

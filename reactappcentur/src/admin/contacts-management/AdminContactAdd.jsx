@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { apiUrl } from "../../services/BackendAPIUrl";
 import "react-quill/dist/quill.snow.css";
+import { Icon } from 'semantic-ui-react';
 
 export default function AdminContactAdd(){
     
@@ -41,7 +42,7 @@ export default function AdminContactAdd(){
 
     return (
             <div>
-                <h1>Add Contact</h1>
+                <h4>Contact Management > Add Contact</h4>
                 <form onSubmit={handleSubmit} className='ui form'>
                     <div>
                         <label>Contact No.:</label>
@@ -132,8 +133,8 @@ export default function AdminContactAdd(){
                         </div>
                     </div>
                     <br />
-                    <button type="submit" className='ui button primary' disabled={loading}>
-                        {loading ? 'Saving... Please Wait!' : 'Add Contact'}
+                    <button type="submit" className='ui button tiny primary' disabled={loading}>
+                        <Icon name="save"/> {loading ? 'Saving... Please Wait!' : 'Add Contact'}
                     </button>
                 </form>
             </div>

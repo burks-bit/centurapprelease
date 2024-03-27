@@ -7,10 +7,11 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { Icon } from 'semantic-ui-react';
 
-export default function AdminServiceAdd(){
+export default function AdminTestimonialAdd(){
     
-    const [services, setServices] = useState({
-        services: '',
+    const [header, setHeader] = useState({
+        header_title: '',
+        header_body: '',
         enabled: '',
     });
 
@@ -18,16 +19,16 @@ export default function AdminServiceAdd(){
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setServices(prevState => ({
+        setHeader(prevState => ({
             ...prevState,
             [name]: value
         }));
     };
 
-    const handleservicesbodyChange = (value) => {
-        setServices(prevState => ({
+    const handleHeaderbodyChange = (value) => {
+        setHeader(prevState => ({
             ...prevState,
-            services: value
+            header_body: value
         }));
     };
 
@@ -35,24 +36,34 @@ export default function AdminServiceAdd(){
         e.preventDefault();
         setLoading(true);
         try {
-            await axios.post(`${apiUrl}api/addnewmgmtservice`, services);
+            await axios.post(`${apiUrl}api/addnewmgmtheader`, header);
             window.location.reload();
         } catch (error) {
-            console.error('Error adding services:', error);
-            alert('Failed to add services. Please try again.');
+            console.error('Error adding header:', error);
+            alert('Failed to add header. Please try again.');
         }
         setLoading(false);
     };
 
     return (
             <div>
-                <h4>Services Management > Add New Services</h4>
+                <h4>Header Management > Add Header</h4>
                 <form onSubmit={handleSubmit} className='ui form'>
                     <div>
-                        <label>Services:</label>
+                        <label>Header Title:</label>
+                        <input
+                            type="text"
+                            name="header_title"
+                            value={header.header_title}
+                            onChange={handleChange}
+                            required
+                        />
+                    </div>
+                    <div>
+                        <label>Header Body:</label>
                         <ReactQuill
-                            value={services.services}
-                            onChange={handleservicesbodyChange}
+                            value={header.header_body}
+                            onChange={handleHeaderbodyChange}
                         />
                     </div>
                     <div>
@@ -61,15 +72,15 @@ export default function AdminServiceAdd(){
                             <input
                                 type="checkbox"
                                 name="enabled"
-                                checked={services.enabled === '1'} // Assuming '1' represents true and '0' represents false
-                                onChange={(e) => setServices(prevState => ({ ...prevState, enabled: e.target.checked ? '1' : '0' }))}
+                                checked={header.enabled === '1'} // Assuming '1' represents true and '0' represents false
+                                onChange={(e) => setHeader(prevState => ({ ...prevState, enabled: e.target.checked ? '1' : '0' }))}
                             />
                             <label>Enabled</label>
                         </div>
                     </div>
                     <br />
-                    <button type="submit" className='ui button tiny primary' disabled={loading}>
-                        <Icon name="cancel"/> {loading ? 'Saving... Please Wait!' : 'Add services'}
+                    <button type="submit" className='ui button primary tiny' disabled={loading}>
+                        <Icon name='save' /> {loading ? 'Saving... Please Wait!' : 'Add header'}
                     </button>
                 </form>
             </div>

@@ -34,7 +34,7 @@ class MapContainer extends Component {
             <Map
                 google={this.props.google}
                 zoom={13}
-                style={{ width: '66%', height: '500px' }}
+                style={{ width: '97%', height: '370px' }}
                 initialCenter={{
                     lat: position.lat(),
                     lng: position.lng()

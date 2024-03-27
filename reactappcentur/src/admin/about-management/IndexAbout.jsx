@@ -6,6 +6,7 @@ import "react-quill/dist/quill.snow.css";
 import { apiUrl } from "../../services/BackendAPIUrl";
 import AdminMissionAdd from "./AdminAddMission";
 import AdminVisionAdd from "./AdminAddVision";
+import {Icon} from 'semantic-ui-react'
 
 export default function IndexAbout() {
 
@@ -122,9 +123,12 @@ export default function IndexAbout() {
 
     const handleAddMissionButtonClick = () => {
         setShowAddMissionForm(true);
+        setShowAddVisionForm(false); // Hide the vision form
     };
+    
     const handleAddVisionButtonClick = () => {
         setShowAddVisionForm(true);
+        setShowAddMissionForm(false); // Hide the mission form
     };
 
     const handleMissionAdded = () => {
@@ -155,12 +159,14 @@ export default function IndexAbout() {
                 <h1>Mission & Vision Management</h1>
                 {/* <h2>Mission</h2> */}
                 {!showAddMissionForm && (
-                    <button className="ui button tiny" onClick={handleAddMissionButtonClick}>
-                        Add Mission
+                    <button className="ui button tiny teal" onClick={handleAddMissionButtonClick}>
+                        <Icon name="plus square"/> Add Mission
                     </button>
                 )}
 
-                {!showAddMissionForm && (
+                {showAddMissionForm || showAddVisionForm ? (
+                    <div></div>
+                ) : (
                     <div>
                     {savingMission && (
                         <div className="ui active centered inline loader"></div>
@@ -206,17 +212,17 @@ export default function IndexAbout() {
                                         <td style={{ width: '25%' }}>
                                             {editModeMission && editedMission.id === mission.id ?
                                                 <div>
-                                                    <button className="ui button primary" onClick={handleSaveMission}>
-                                                        {savingMission ? "Saving..." : "Save"}
+                                                    <button className="ui button tiny primary" onClick={handleSaveMission}>
+                                                        <Icon name="save"/> {savingMission ? "Saving..." : "Save"}
                                                     </button>
                                                     &ensp;
-                                                    <button className="ui button" onClick={handleCancelMission}>Cancel</button>
+                                                    <button className="ui button tiny" onClick={handleCancelMission}><Icon name="cancel"/> Cancel</button>
                                                 </div>
                                                 :
                                                 <div>
-                                                    <button className="ui button" onClick={() => handleEditMission(mission)}>Edit</button>
+                                                    <button className="ui button tiny" onClick={() => handleEditMission(mission)}><Icon name="edit"/> Edit</button>
                                                     &ensp;
-                                                    <button className="ui button red" onClick={() => handleDeleteMission(mission.id)}>Delete</button>
+                                                    <button className="ui button tiny red" onClick={() => handleDeleteMission(mission.id)}><Icon name="trash"/> Delete</button>
                                                 </div>
                                             }
                                         </td>
@@ -228,8 +234,8 @@ export default function IndexAbout() {
                    
                     {/* <h2>Vision</h2> */}
                     {!showAddVisionForm && (
-                        <button className="ui button tiny" onClick={handleAddVisionButtonClick}>
-                            Add Vision
+                        <button className="ui button tiny teal" onClick={handleAddVisionButtonClick}>
+                            <Icon name="plus square"/> Add Vision
                         </button>
                     )}
                     {savingVision && (
@@ -275,17 +281,17 @@ export default function IndexAbout() {
                                         <td style={{ width: '25%' }}>
                                             {editModeVision && editedVision.id === vision.id ?
                                                 <div>
-                                                    <button className="ui button primary" onClick={handleSaveVision}>
-                                                        {savingVision ? "Saving..." : "Save"}
+                                                    <button className="ui button tiny primary" onClick={handleSaveVision}>
+                                                        <Icon name="save"/> {savingVision ? "Saving..." : "Save"}
                                                     </button>
                                                     &ensp;
-                                                    <button className="ui button" onClick={handleCancelVision}>Cancel</button>
+                                                    <button className="ui button tiny" onClick={handleCancelVision}><Icon name="cancel"/> Cancel</button>
                                                 </div>
                                                 :
                                                 <div>
-                                                    <button className="ui button" onClick={() => handleEditVision(vision)}>Edit</button>
+                                                    <button className="ui button tiny" onClick={() => handleEditVision(vision)}><Icon name="edit"/> Edit</button>
                                                     &ensp;
-                                                    <button className="ui button red" onClick={() => handleDeleteVision(vision.id)}>Delete</button>
+                                                    <button className="ui button tiny red" onClick={() => handleDeleteVision(vision.id)}><Icon name="trash"/> Delete</button>
                                                 </div>
                                             }
                                         </td>
@@ -297,24 +303,26 @@ export default function IndexAbout() {
                 </div>
                 )}
 
-                {showAddMissionForm && (
-                    <div>
-                        <AdminMissionAdd onCareerAdded={handleMissionAdded} />
-                        <br />
-                        <button className="ui button" onClick={handleCancelMission}>
-                            Cancel
-                        </button>
-                    </div>
-                )}
-                {showAddVisionForm && (
-                    <div>
-                        <AdminVisionAdd onCareerAdded={handleVisionAdded} />
-                        <br />
-                        <button className="ui button" onClick={handleCancelVision}>
-                            Cancel
-                        </button>
-                    </div>
-                )}
+
+            {showAddMissionForm && !showAddVisionForm && (
+                <div>
+                    <AdminMissionAdd onCareerAdded={handleMissionAdded} />
+                    <br />
+                    <button className="ui button tiny" onClick={handleCancelMission}>
+                        <Icon name="cancel"/> Cancel
+                    </button>
+                </div>
+            )}
+
+            {showAddVisionForm && !showAddMissionForm && (
+                <div>
+                    <AdminVisionAdd onCareerAdded={handleVisionAdded} />
+                    <br />
+                    <button className="ui button tiny" onClick={handleCancelVision}>
+                        <Icon name="cancel"/> Cancel
+                    </button>
+                </div>
+            )}
             </div>
         </Layout>
     )

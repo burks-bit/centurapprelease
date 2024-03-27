@@ -4,47 +4,55 @@ import Layout from "../../layout/Layout";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { apiUrl } from "../../services/BackendAPIUrl";
-import AdminHeaderAdd from "./AdminHeaderAdd";
+// import AdminHeaderAdd from "./AdminHeaderAdd";
 import { Icon } from "semantic-ui-react";
 
-export default function IndexHeader() {
-    const [headerData, setHeaderData] = useState([]);
+export default function IndexTestimonial() {
+    const [testimonialData, setTestimonial] = useState([]);
     const [editMode, setEditMode] = useState(false);
-    const [editedHeader, setEditedHeader] = useState({ id: null, title: '', body: '', enabled: false });
+    const [editedTestimonial, setEditedTestimonial] = useState({
+        id: null,
+        testimonial_author: '',
+        testimonial_author_designation: '',
+        testimonial_author_gender: '',
+        testimonial_feedback: '',
+        enabled: false
+    });
+
     const [saving, setSaving] = useState(false);
     const [showAddForm, setShowAddForm] = useState(false); 
 
     useEffect(() => {
-        const fetchHeaderData = async () => {
+        const fetTestimonials = async () => {
             try {
-                const response = await axios.get(apiUrl + 'api/getmgmtheader');
-                setHeaderData(response.data.header);
+                const response = await axios.get(apiUrl + 'api/getmgmttestimonials');
+                setTestimonial(response.data.testimonial);
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
         };
-        fetchHeaderData();
+        fetTestimonials();
     }, []);
 
     const handleEdit = (header) => {
-        setEditedHeader({ id: header.id, title: header.header_title, body: header.header_body, enabled: header.enabled });
+        setEditedTestimonial({ id: header.id, title: header.header_title, body: header.header_body, enabled: header.enabled });
         setEditMode(true);
     }
 
     const handleSave = async () => {
         try {
             setSaving(true);
-            await axios.put(apiUrl + `api/updatemgmtheader/${editedHeader.id}`, {
-                header_title: editedHeader.title,
-                header_body: editedHeader.body,
-                enabled: editedHeader.enabled
+            await axios.put(apiUrl + `api/updatemgmtheader/${editedTestimonial.id}`, {
+                header_title: editedTestimonial.title,
+                header_body: editedTestimonial.body,
+                enabled: editedTestimonial.enabled
             });
 
             const response = await axios.get(apiUrl + 'api/getmgmtheader');
-            setHeaderData(response.data.header);
+            setTestimonial(response.data.header);
 
             setEditMode(false);
-            setEditedHeader({ id: null, title: '', body: '', enabled: false });
+            setEditedTestimonial({ id: null, title: '', body: '', enabled: false });
         } catch (error) {
             console.error('Error updating data:', error);
         } finally {
@@ -54,15 +62,15 @@ export default function IndexHeader() {
 
     const handleCancel = () => {
         setEditMode(false);
-        setEditedHeader({ id: null, title: '', body: '', enabled: false });
+        setEditedTestimonial({ id: null, title: '', body: '', enabled: false });
         setShowAddForm(false);
     }
 
     const handleDelete = async (id) => {
         try {
             await axios.post(apiUrl + `api/deletemgmtheader/${id}`);
-            const updatedHeaders = headerData.filter(header => header.id !== id);
-            setHeaderData(updatedHeaders);
+            const updatedHeaders = testimonialData.filter(header => header.id !== id);
+            setTestimonial(updatedHeaders);
         } catch (error) {
             console.error('Error deleting data:', error);
         }
@@ -78,7 +86,7 @@ export default function IndexHeader() {
 
     const handleEditChange = (e, field) => {
         const { value, type, checked } = e.target;
-        setEditedHeader(prevState => ({
+        setEditedTestimonial(prevState => ({
             ...prevState,
             [field]: type === "checkbox" ? checked : value
         }));
@@ -87,10 +95,10 @@ export default function IndexHeader() {
     return (
         <Layout>
             <div>
-                <h1>Header Management</h1>
+                <h1>Testimonials Management</h1>
                 {!showAddForm && (
                     <button className="ui button tiny teal" onClick={handleAddButtonClick}>
-                        <Icon name="plus square"/> Add Header
+                        <Icon name="plus square"/> Add Testimonial
                     </button>
                 )}
                 {!showAddForm && (
@@ -104,26 +112,26 @@ export default function IndexHeader() {
                         <table className="ui table bordered">
                             <thead>
                                 <tr>
-                                    <th style={{ width: '25%' }}>Header Title</th>
-                                    <th style={{ width: '50%' }}>Header Body</th>
+                                    <th style={{ width: '25%' }}>Author</th>
+                                    <th style={{ width: '50%' }}>Testimonial</th>
                                     <th style={{ width: '25%' }}>Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {headerData.map(header => (
+                                {testimonialData.map(header => (
                                     <tr key={header.id}>
                                         <td style={{ width: '25%' }}>
-                                            {editMode && editedHeader.id === header.id ?
+                                            {editMode && editedTestimonial.id === header.id ?
                                                 <form className="ui form">
                                                     <input
-                                                        value={editedHeader.title}
-                                                        onChange={(e) => setEditedHeader({ ...editedHeader, title: e.target.value })}
+                                                        value={editedTestimonial.title}
+                                                        onChange={(e) => setEditedTestimonial({ ...editedTestimonial, title: e.target.value })}
                                                     />
                                                     <div className="ui checkbox">
                                                         <input
                                                             type="checkbox"
                                                             name="enabled"
-                                                            checked={editedHeader.enabled}
+                                                            checked={editedTestimonial.enabled}
                                                             onChange={(e) => handleEditChange(e, 'enabled')}
                                                         />
                                                         <label>Enabled</label>
@@ -137,17 +145,17 @@ export default function IndexHeader() {
                                             }
                                         </td>
                                         <td style={{ width: '50%' }}>
-                                            {editMode && editedHeader.id === header.id ?
+                                            {editMode && editedTestimonial.id === header.id ?
                                                 <ReactQuill
-                                                    value={editedHeader.body}
-                                                    onChange={(value) => setEditedHeader({ ...editedHeader, body: value })}
+                                                    value={editedTestimonial.body}
+                                                    onChange={(value) => setEditedTestimonial({ ...editedTestimonial, body: value })}
                                                 style={{height: '100%'}}/>
                                                 :
                                                 <div dangerouslySetInnerHTML={{ __html: header.header_body }} />
                                             }
                                         </td>
                                         <td style={{ width: '25%' }}>
-                                            {editMode && editedHeader.id === header.id ?
+                                            {editMode && editedTestimonial.id === header.id ?
                                                 <div>
                                                     <button className="ui button primary tiny" onClick={handleSave}>
                                                         <Icon name="save"/> {saving ? "Saving..." : "Save"}
@@ -172,7 +180,7 @@ export default function IndexHeader() {
                 )}
                 {showAddForm && (
                     <div>
-                        <AdminHeaderAdd onCareerAdded={handleCareerAdded} />
+                        {/* <AdminHeaderAdd onCareerAdded={handleCareerAdded} /> */}
                         <br />
                         <button className="ui button tiny" onClick={handleCancel}>
                             <Icon name="cancel"/> Cancel

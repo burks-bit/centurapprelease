@@ -4,6 +4,7 @@ import Layout from "../../layout/Layout";
 import { apiUrl } from "../../services/BackendAPIUrl";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import { Icon } from 'semantic-ui-react';
 
 export default function AdminCareerAdd(){
     
@@ -47,7 +48,7 @@ export default function AdminCareerAdd(){
 
     return (
             <div>
-                <h1>Add Career</h1>
+                <h4>Career Management > Add Career</h4>
                 <form onSubmit={handleSubmit} className='ui form'>
                     <div>
                         <label>Title:</label>
@@ -80,8 +81,8 @@ export default function AdminCareerAdd(){
                         </select>
                     </div>
                     <br />
-                    <button type="submit" className='ui button primary' disabled={loading}>
-                        {loading ? 'Saving... Please Wait!' : 'Add Career'}
+                    <button type="submit" className='ui button primary tiny' disabled={loading}>
+                        <Icon name='save'/>{loading ? 'Saving... Please Wait!' : 'Add Career'}
                     </button>
                 </form>
             </div>

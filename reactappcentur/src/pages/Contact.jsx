@@ -6,6 +6,7 @@ import '../styles/custom_contact.css'
 import Footer from "./Footer";
 import CompanyLocation from "./CompanyLocation"
 import { apiUrl } from "../services/BackendAPIUrl";
+import { Icon } from "semantic-ui-react";
 
 export default function Contact(){
 
@@ -30,7 +31,7 @@ export default function Contact(){
         <div>
             <Menu />
             <div className="ui container">
-                <h1 className="contact_h1">Contact Us</h1>
+                <h1 className="contact_h1"><Icon name='text telephone' size='large' color='green' /> Contact Us</h1>
                 <p>
                 Have questions or inquiries? Feel free to reach out to us! Whether you're looking for more information about our products or services, have feedback to share, or just want to say hello, we'd love to hear from you. Contact us using the details provided below, and we'll get back to you as soon as possible. Your satisfaction is our priority!
                 </p>

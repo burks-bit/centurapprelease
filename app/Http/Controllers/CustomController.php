@@ -8,6 +8,8 @@ use App\Models\Header;
 use App\Models\Mission;
 use App\Models\Product;
 use App\Models\Career;
+use App\Models\Testimonial;
+use App\Models\CompanyHistory;
 use App\Models\Service;
 use App\Models\Vision;
 use Illuminate\Http\Request;
@@ -43,6 +45,8 @@ class CustomController extends Controller
         $headers = DB::table('headers')->where('enabled', 1)->get();
         $missions = DB::table('missions')->where('enabled', 1)->get();
         $visions = DB::table('visions')->where('enabled', 1)->get();
+        $testimonials = DB::table('testimonials')->get();
+        $testimonialswithlimit = DB::table('testimonials')->limit(3)->get();
         
         $webdatas = array();
         foreach($headers as $headerkey => $header){
@@ -65,7 +69,9 @@ class CustomController extends Controller
         // return view('welcome', compact('header', 'mission', 'vision', 'products'));
         return response()->json([
             'status' => 'success',
-            'webdata' => $webdatas
+            'webdata' => $webdatas,
+            'testimonial' => $testimonials,
+            'testimonialwihtlimit' => $testimonialswithlimit
         ]);
     }
 
@@ -96,6 +102,16 @@ class CustomController extends Controller
         return response()->json([
             'status' => 'success',
             'clients' => $clients
+        ]);
+    }
+
+    public function getallcareers(){
+
+        $careers = DB::table('careers')->get();
+        
+        return response()->json([
+            'status' => 'success',
+            'careers' => $careers
         ]);
     }
 
@@ -480,6 +496,43 @@ class CustomController extends Controller
         ]);
     }
 
+    public function addnewmgmtproduct(Request $request){
+        Log::info($request);
+        try {
+            $product = new Product();
+            $product->product_name = $request->input('product_name');
+            $product->product_model = $request->input('product_model');
+            $product->product_description = $request->input('product_description');
+            $product->product_manufacturer = $request->input('product_manufacturer');
+            $product->product_specimen_type = $request->input('product_specimen_type');
+            $product->enabled = $request->input('enabled') ? 1 : 0;
+    
+            // if ($request->hasFile('product_image')) {
+            //     $image = $request->file('product_image');
+            //     $imageName = time().'.'.$image->getClientOriginalExtension();
+            //     $image->storeAs('public/product_images', $imageName); // Change the storage path as needed
+            //     $product->product_image = $imageName;
+            // }
+            if($request->has('product_image')){
+                $base64_image = $request->input('product_image');
+                $image_parts = explode(";base64,", $base64_image);
+                $image_type_aux = explode("image/", $image_parts[0]);
+                $image_type = $image_type_aux[1];
+                $image_base64 = base64_decode($image_parts[1]);
+                $imageName = time().'.'.$image_type;
+                file_put_contents(public_path('product_images/'.$imageName), $image_base64);
+                $product->product_image = $imageName;
+            }
+            
+            $product->save();
+            
+            return response()->json(['status' => 'success', 'message' => 'Product updated successfully']);
+        } catch (\Exception $e) {
+            return response()->json(['status' => 'error', 'message' => 'Failed to update product: ' . $e->getMessage()], 500);
+        }
+    }
+    
+
     public function updateMgmtProducts(Request $request, $id){
         try {
             $product = Product::findOrFail($id);
@@ -606,8 +659,85 @@ class CustomController extends Controller
             return response()->json(['message' => 'Failed to delete career', 'error' => $e->getMessage()], 500);
         }
     }
+
+    public function addnewmgmthistory(Request $request){
+
+        $chistory = new CompanyHistory();
+        $chistory->company_history = $request->input('company_history');
+        $chistory->enabled = $request->input('enabled') ? 1 : 0;
+
+        $chistory->save();
+
+        // Optionally, you can return a response indicating success
+        return response()->json(['message' => 'company history added successfully'], 201);
+    }
+
+    public function getMgmtHistory(){
+
+        $chistories = DB::table('company_histories')->get();
+        
+        // $tmpdata = array();
+        // foreach($contacts as $contactskey => $contact){
+        //     // $tmpdata['allwebdata'] = $header;
+        // }
+        // $contacts = array($contact);
+        
+        return response()->json([
+            'status' => 'success',
+            'history' => $chistories
+        ]);
+    }
+
+    public function updateMgmtHistory(Request $request, $id){
+
+        $chistory = CompanyHistory::findOrFail($id); 
+        $chistory->company_history = $request->input('company_history');
+        $chistory->enabled = $request->input('enabled') ? 1 : 0;
+
+        if($chistory->save()) {
+            return response()->json([
+                'status' => 'success'
+            ]);
+        } else {
+            
+        }
+    }
+
+    public function deletemgmthistory($id)
+    {
+        try {
+            $chistory = CompanyHistory::findOrFail($id);
+            $chistory->delete();
+            return response()->json(['message' => 'Company history deleted successfully'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Failed to delete history', 'error' => $e->getMessage()], 500);
+        }
+    }
+
+    public function addnewmgmttestimonials(Request $request){
+
+        // Create a new Career instance
+        $testimonial = new Testimonial();
+        $testimonial->testimonial_author = $request->input('testimonial_author');
+        $testimonial->testimonial_author_designation = $request->input('testimonial_author_designation');
+        $testimonial->testimonial_author_gender = $request->input('testimonial_author_gender');
+        $testimonial->testimonial_feedback = $request->input('testimonial_feedback');
+        $testimonial->enabled = $request->input('enabled') ? 1 : 0;
+
+        // Save the career
+        $testimonial->save();
+
+        // Optionally, you can return a response indicating success
+        return response()->json(['message' => 'Tstimonial added successfully'], 201);
+    }
+
+    public function getmgmttestimonials(){
+
+        $testimonials = DB::table('testimonials')->get();
+        
+        return response()->json([
+            'status' => 'success',
+            'testimonial' => $testimonials
+        ]);
+    }
 }
-
-
-
-

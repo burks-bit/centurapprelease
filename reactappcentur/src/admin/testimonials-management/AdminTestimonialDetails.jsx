@@ -8,7 +8,7 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { Icon } from 'semantic-ui-react';
 
-export default function AdminTestimonialDetails(){
+export default function AdminCareerDetails(){
 
     let {id} = useParams();
     const [career, setCareer] = useState(null);

@@ -5,6 +5,7 @@ import spinner from "../../web_images/spinner.svg"; // Path to your spinner imag
 import { apiUrl } from "../../services/BackendAPIUrl";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import { Icon } from 'semantic-ui-react';
 
 export default function AdminVisionAdd(){
     
@@ -45,7 +46,7 @@ export default function AdminVisionAdd(){
 
     return (
             <div>
-                <h1>Add Vision</h1>
+                <h4>About Management > Add Vision</h4>
                 <form onSubmit={handleSubmit} className='ui form'>
                     <div>
                         <label>Vision:</label>
@@ -67,8 +68,8 @@ export default function AdminVisionAdd(){
                         </div>
                     </div>
                     <br />
-                    <button type="submit" className='ui button primary' disabled={loading}>
-                        {loading ? 'Saving... Please Wait!' : 'Add vision'}
+                    <button type="submit" className='ui button tiny primary' disabled={loading}>
+                        <Icon name="save"/> {loading ? 'Saving... Please Wait!' : 'Add vision'}
                     </button>
                 </form>
             </div>

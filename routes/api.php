@@ -53,6 +53,16 @@ Route::get('/getmgmtcontact', [CustomController::class, 'getMgmtContacts']);
 Route::put('/updatemgmtcontact/{id}', [CustomController::class, 'updateMgmtContacts']);
 Route::post('/deletemgmtcontact/{id}', [CustomController::class, 'deletemgmtcontact']);
 
+Route::post('/addnewmgmthistory', [CustomController::class, 'addnewmgmthistory']);
+Route::get('/getmgmthistory', [CustomController::class, 'getMgmtHistory']);
+Route::put('/updatemgmthistory/{id}', [CustomController::class, 'updateMgmtHistory']);
+Route::post('/deletemgmthistory/{id}', [CustomController::class, 'deletemgmthistory']);
+
+Route::post('/addnewmgmttestimonials', [CustomController::class, 'addnewmgmttestimonials']);
+Route::get('/getmgmttestimonials', [CustomController::class, 'getmgmttestimonials']);
+Route::put('/updatemgmtproduct/{id}', [CustomController::class, 'updateMgmtProducts']);
+
+Route::post('/addnewmgmtproduct', [CustomController::class, 'addnewmgmtproduct']);
 Route::get('/getmgmtproduct', [CustomController::class, 'getMgmtProducts']);
 Route::put('/updatemgmtproduct/{id}', [CustomController::class, 'updateMgmtProducts']);
 
@@ -70,6 +80,7 @@ Route::get('/getallproducts', [CustomController::class, 'getallproducts']);
 Route::get('/getspecificproduct/{id}', [CustomController::class, 'getspecificproduct']);
 Route::get('/getclients', [CustomController::class, 'getclients']);
 Route::get('/getallclients', [CustomController::class, 'getallclients']);
+Route::get('/getallcareers', [CustomController::class, 'getallcareers']);
 Route::get('/getmissionvision', [CustomController::class, 'getmissionvision']);
 Route::get('/getcompanyhistory', [CustomController::class, 'getcompanyhistory']);
 Route::get('/getcontactdetails', [CustomController::class, 'getcontactdetails']);

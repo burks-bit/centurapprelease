@@ -5,6 +5,7 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { apiUrl } from "../../services/BackendAPIUrl";
 import AdminContactAdd from "./AdminContactAdd";
+import {Icon} from 'semantic-ui-react'
 
 export default function IndexContact() {
     
@@ -132,13 +133,13 @@ export default function IndexContact() {
             <div>
                 <h1>Contacts Management</h1>
                 {!showAddForm && (
-                    <button className="ui button" onClick={handleAddButtonClick}>
-                        Add Contact
+                    <button className="ui button tiny teal" onClick={handleAddButtonClick}>
+                        <Icon name="plus square"/> Add Contact
                     </button>
                 )}
-                
                 {!showAddForm && (
                     <div>
+                        <br />
                         {saving && (
                             <div className="ui active centered inline loader"></div>
                         )}
@@ -247,17 +248,17 @@ export default function IndexContact() {
                                             <td style={{ width: '25%' }}>
                                                 {editMode && editedContact.id === contact.id ?
                                                     <div>
-                                                        <button className="ui button primary" onClick={handleSave}>
-                                                            {saving ? "Saving..." : "Save"}
+                                                        <button className="ui button tiny primary" onClick={handleSave}>
+                                                            <Icon name="save"/> {saving ? "Saving..." : "Save"}
                                                         </button>
                                                         &ensp;
-                                                        <button className="ui button" onClick={handleCancel}>Cancel</button>
+                                                        <button className="ui button tiny" onClick={handleCancel}><Icon name="cancel"/> Cancel</button>
                                                     </div>
                                                     :
                                                     <div>
-                                                        <button className="ui button" onClick={() => handleEdit(contact)}>Edit</button>
+                                                        <button className="ui button tiny" onClick={() => handleEdit(contact)}><Icon name="edit"/> Edit</button>
                                                         &ensp;
-                                                        <button className="ui button red" onClick={() => handleDelete(contact.id)}>Delete</button>
+                                                        <button className="ui button tiny red" onClick={() => handleDelete(contact.id)}><Icon name="trash"/> Delete</button>
                                                     </div>
                                                 }
                                             </td>
@@ -273,8 +274,8 @@ export default function IndexContact() {
                     <div>
                         <AdminContactAdd onCareerAdded={handleCareerAdded} />
                         <br />
-                        <button className="ui button" onClick={handleCancel}>
-                            Cancel
+                        <button className="ui button tiny" onClick={handleCancel}>
+                            <Icon name="cancel"/> Cancel
                         </button>
                     </div>
                 )}

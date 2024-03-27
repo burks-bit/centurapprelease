@@ -5,6 +5,7 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { apiUrl } from "../../services/BackendAPIUrl";
 import AdminCareerAdd from "./AdminCareerAdd";
+import { Icon } from "semantic-ui-react";
 
 export default function IndexCareer() {
     const [careerData, setCareerData] = useState([]);
@@ -50,8 +51,8 @@ export default function IndexCareer() {
                 <h1>Career Management</h1>
                 
                 {!showAddForm && (
-                    <button className="ui button" onClick={handleAddButtonClick}>
-                        Add
+                    <button className="ui button tiny teal" onClick={handleAddButtonClick}>
+                        <Icon name='plus square' /> Add Job Posting
                     </button>
                 )}
 
@@ -68,7 +69,10 @@ export default function IndexCareer() {
                             {careerData.map(career => (
                                 <tr key={career.id}>
                                     <td style={{ width: '50%' }}>
-                                        <div style={{paddingLeft:'30px', color: '#1371b6', fontWeight: 'bold'}}  dangerouslySetInnerHTML={{ __html: career.title }} />
+                                        <div>
+                                            
+                                            <p style={{color: '#1371b6', fontWeight: 'bold'}}><Icon name='newspaper outline' /> { career.title}</p>
+                                        </div>
                                     </td>
                                     <td style={{ width: '25%' }}>
                                         <div style={{ paddingLeft: '' }}>
@@ -78,11 +82,11 @@ export default function IndexCareer() {
                                         </div>
                                     </td>
                                     <td style={{ width: '25%' }}>
-                                        <a href={`/centurmanagement/careers-management/career-details/${career.id}`} className="ui button">
-                                            View
+                                        <a href={`/centurmanagement/careers-management/career-details/${career.id}`} className="ui button tiny">
+                                            <Icon name="eye"/> View
                                         </a>
                                         &ensp;
-                                        <button className="ui button red" onClick={() => handleDelete(career.id)}>Delete</button>
+                                        <button className="ui button tiny red" onClick={() => handleDelete(career.id)}><Icon name="trash"/> Delete</button>
                                     </td>
                                 </tr>
                             ))}
@@ -94,8 +98,8 @@ export default function IndexCareer() {
                     <div>
                         <AdminCareerAdd onCareerAdded={handleCareerAdded} />
                         <br />
-                        <button className="ui button" onClick={handleCancel}>
-                            Cancel
+                        <button className="ui button tiny" onClick={handleCancel}>
+                            <Icon name="cancel"/> Cancel
                         </button>
                     </div>
                 )}

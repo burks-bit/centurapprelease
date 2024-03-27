@@ -22,6 +22,7 @@ export default function Header() {
           <li className='custom_li'><Link to="/products">Products</Link></li>
           <li className='custom_li'><Link to="/services">Services</Link></li>
           <li className='custom_li'><Link to="/clients">Clients</Link></li>
+          <li className='custom_li'><Link to="/careers">Careers</Link></li>
           <li className='custom_li'><Link to="/contactus">Contact Us</Link></li>
         </ul>
       </nav>

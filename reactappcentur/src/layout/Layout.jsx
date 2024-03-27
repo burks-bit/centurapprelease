@@ -37,10 +37,13 @@ const Layout = ({ children }) => {
           <li><a href="/centurmanagement/admin-dashboard">Home</a></li>
           <li><a href="/centurmanagement/header-management">Header Management</a></li>
           <li><a href="/centurmanagement/about-management">About Management</a></li>
+          <li><a href="/centurmanagement/history-management">Hisotry Management</a></li>
           <li><a href="/centurmanagement/products-management">Product Management</a></li>
           <li><a href="/centurmanagement/services-management">Services Management</a></li>
           <li><a href="/centurmanagement/contacts-management">Contact Management</a></li>
           <li><a href="/centurmanagement/careers-management">Career Management</a></li>
+          <li><a href="/centurmanagement/testimonials-management">Testimonial Management</a></li>
+          <li><a href="/centurmanagement/careers-management">User Management</a></li>
         </ul>
         <br />
         <button className="ui button red" onClick={handleLogout}>Logout</button>

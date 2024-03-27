@@ -5,6 +5,7 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { apiUrl } from "../../services/BackendAPIUrl";
 import AdminServiceAdd from "./AdminServiceAdd";
+import {Icon} from 'semantic-ui-react'
 
 export default function IndexService() {
 
@@ -89,12 +90,12 @@ export default function IndexService() {
             <div>
                 <h1>Services Management</h1>
                 {!showAddForm && (
-                    <button className="ui button" onClick={handleAddButtonClick}>
-                        Add Service
+                    <button className="ui button tiny teal" onClick={handleAddButtonClick}>
+                        <Icon name="plus square"/> Add Service
                     </button>
                 )}
                 {!showAddForm && (
-                    <div>
+                    <div><br />
                         {saving && (
                             <div className="ui active centered inline loader"></div>
                         )}
@@ -137,17 +138,17 @@ export default function IndexService() {
                                             <td style={{ width: '25%' }}>
                                                 {editMode && editedService.id === service.id ?
                                                     <div>
-                                                        <button className="ui button primary" onClick={handleSave}>
-                                                            {saving ? "Saving..." : "Save"}
+                                                        <button className="ui button tiny primary" onClick={handleSave}>
+                                                            <Icon name="save"/> {saving ? "Saving..." : "Save"}
                                                         </button>
                                                         &ensp;
-                                                        <button className="ui button" onClick={handleCancel}>Cancel</button>
+                                                        <button className="ui button tiny" onClick={handleCancel}><Icon name="cancel"/> Cancel</button>
                                                     </div>
                                                     :
                                                     <div>
-                                                        <button className="ui button" onClick={() => handleEdit(service)}>Edit</button>
+                                                        <button className="ui button tiny" onClick={() => handleEdit(service)}><Icon name="edit"/> Edit</button>
                                                         &ensp;
-                                                        <button className="ui button red" onClick={() => handleDelete(service.id)}>Delete</button>
+                                                        <button className="ui button tiny red" onClick={() => handleDelete(service.id)}><Icon name="trash"/> Delete</button>
                                                     </div>
                                                 }
                                             </td>
@@ -162,8 +163,8 @@ export default function IndexService() {
                     <div>
                         <AdminServiceAdd onCareerAdded={handleCareerAdded} />
                         <br />
-                        <button className="ui button" onClick={handleCancel}>
-                            Cancel
+                        <button className="ui button tiny" onClick={handleCancel}>
+                            <Icon name="cancel"/> Cancel
                         </button>
                     </div>
                 )}
