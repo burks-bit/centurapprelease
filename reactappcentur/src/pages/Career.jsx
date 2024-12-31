@@ -33,7 +33,9 @@ export default function Careers() {
         <div>
             <Menu />
             <div className="ui container">
-                <h1 className="clients_h1"><Icon name='list' size='large' color='green' /> Careers</h1>
+                <h1 className="clients_h1">
+                    {/* <Icon name='list' size='large' color='green' /> */}
+                Careers</h1>
                 <p>
                     Curious about who we work with? Explore our list of valued clients below. We take pride in our partnerships and collaborations, and we're grateful for the opportunity to serve each and every one of them. Interested in joining our growing list of satisfied clients? Contact us today to learn more about our services and how we can support your business needs.
                 </p>

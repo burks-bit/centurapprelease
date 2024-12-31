@@ -33,7 +33,9 @@ export default function ProductDetails(){
                 <div>
                     {product ? (
                         <div>
-                            <Link to={`/products/details/${product.id}`}> <h1 className='products_h1'><Icon name='info circle' size='large' color='green' /> {product.product_name}</h1></Link>
+                            <Link to={`/products/details/${product.id}`}> <h1 className='products_h1'>
+                                {/* <Icon name='info circle' size='large' color='green' /> */}
+                                {product.product_name}</h1></Link>
                                 <div className="ui two column stackable grid" style={{marginTop: '20px'}}>
                                     <div className="column" style={{width: '30%'}}>
                                         <div className="ui product-box-productdetails-page">

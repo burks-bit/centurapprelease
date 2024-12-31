@@ -5,6 +5,7 @@ import Layout from "../layout/Layout";
 
 
 export default function Administrator() {
+
     return (
         <Layout>
             <div className="">

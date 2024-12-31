@@ -1,28 +1,42 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import '../styles/custom_layout.css'
 import { apiUrl } from "../services/BackendAPIUrl";
 
-// console.log(apiUrl)
-    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-
-    const handleLogout = () => {
-        axios
-        .post(apiUrl + "api/logout", {}, {
-            headers: {
-                'X-CSRF-TOKEN': csrfToken
-            }
-        })
-        .then((response) => {
-            console.log("Logout successful:", response.data);
-            window.location.href = "/centurmanagement/admin-login";
-        })
-        .catch((error) => {
-            console.error("Logout error:", error);
-        });
-    };
+console.log(localStorage.getItem('userData'))
 
 const Layout = ({ children }) => {
+  
+  const [csrfToken, setCsrfToken] = useState('');
+
+  useEffect(() => {
+    const fetchCsrfToken = async () => {
+      try {
+        const response = await axios.get(apiUrl + 'sanctum/csrf-cookie');
+        // Once the CSRF token is fetched, update the state
+        setCsrfToken(response.data.csrf_token);
+      } catch (error) {
+        console.error('Failed to fetch CSRF token:', error);
+      }
+    };
+
+    // Fetch CSRF token when the component mounts
+    fetchCsrfToken();
+  }, []); // Empty dependency array ensures the effect runs only once
+
+  const handleLogout = () => {
+    axios.post(apiUrl + "api/logout", {}, {
+      headers: {
+        'X-CSRF-TOKEN': csrfToken
+      }
+    }).then((response) => {
+      console.log("Logout successful:", response.data);
+      window.location.href = "/centurmanagement/admin-login";
+    }).catch((error) => {
+      console.error("Logout error:", error);
+    });
+  };
+
   return (
     <div className="layout">
       <header>

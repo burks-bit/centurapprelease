@@ -42,7 +42,9 @@ export default function Clients(){
         <div>
             <Menu />
             <div className="ui container">
-                <h1 className="clients_h1"><Icon name='hospital' size='large' color='green' /> Our Clients</h1>
+                <h1 className="clients_h1">
+                    {/* <Icon name='hospital' size='large' color='green' /> */}
+                    Our Clients</h1>
                 <p>
                 Curious about who we work with? Explore our list of valued clients below. We take pride in our partnerships and collaborations, and we're grateful for the opportunity to serve each and every one of them. Interested in joining our growing list of satisfied clients? Contact us today to learn more about our services and how we can support your business needs.
                 </p>
@@ -89,7 +91,9 @@ export default function Clients(){
             </div>
 
             <div className="ui container">
-                <h1 className="clients_h1"><Icon name='announcement' size='large' color='green' />  Testimonials</h1>
+                <h1 className="clients_h1">
+                    {/* <Icon name='announcement' size='large' color='green' /> */}
+                    Testimonials</h1>
                 <p>
                 Curious about who we work with? Explore our list of valued clients below. We take pride in our partnerships and collaborations, and we're grateful for the opportunity to serve each and every one of them. Interested in joining our growing list of satisfied clients? Contact us today to learn more about our services and how we can support your business needs.
                 </p>
@@ -117,7 +121,7 @@ export default function Clients(){
                                                     <Card.Header>{testimonial.testimonial_author}</Card.Header>
                                                     <Card.Meta>{testimonial.testimonial_author_designation}</Card.Meta>
                                                     <Card.Description>
-                                                        "{testimonial.testimonial_feedback}"
+                                                        "<div dangerouslySetInnerHTML={{ __html: testimonial.testimonial_feedback }} />"
                                                     </Card.Description>
                                                 </Card.Content>
                                             </Card>

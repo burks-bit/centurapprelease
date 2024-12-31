@@ -16,16 +16,18 @@ use App\Http\Controllers\UserController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
+
+Route::middleware('auth:sanctum')->get('/csrf-cookie', [UserController::class, 'csrfCookie']);
 
 
+    // authentication
+    Route::post('/login', [UserController::class, 'AdministratorLogin']);
+    Route::post('/logout', [UserController::class, 'AdministratorLogout']);
 
-
-// authentication
-Route::post('/login', [UserController::class, 'AdministratorLogin']);
-Route::post('/logout', [UserController::class, 'AdministratorLogout']);
+Route::middleware(['web'])->group(function () {
 
 // admin mgmt
 Route::post('/addnewmgmtheader', [CustomController::class, 'addnewmgmtheader']);
@@ -60,7 +62,8 @@ Route::post('/deletemgmthistory/{id}', [CustomController::class, 'deletemgmthist
 
 Route::post('/addnewmgmttestimonials', [CustomController::class, 'addnewmgmttestimonials']);
 Route::get('/getmgmttestimonials', [CustomController::class, 'getmgmttestimonials']);
-Route::put('/updatemgmtproduct/{id}', [CustomController::class, 'updateMgmtProducts']);
+Route::put('/updatemgmttestimonials/{id}', [CustomController::class, 'updatemgmttestimonials']);
+Route::post('/deletemgmttestimonial/{id}', [CustomController::class, 'deletemgmttestimonial']);
 
 Route::post('/addnewmgmtproduct', [CustomController::class, 'addnewmgmtproduct']);
 Route::get('/getmgmtproduct', [CustomController::class, 'getMgmtProducts']);
@@ -71,6 +74,8 @@ Route::get('/getspecificcareer/{id}', [CustomController::class, 'getspecificcare
 Route::put('/updatemgmtcareer/{id}', [CustomController::class, 'updateMgmtCareers']);
 Route::post('/addnewmgmtcareer', [CustomController::class, 'addnewmgmtcareer']);
 Route::post('/deletemgmtcareer/{id}', [CustomController::class, 'deletemgmtcareer']);
+});
+
 
 
 // viewing

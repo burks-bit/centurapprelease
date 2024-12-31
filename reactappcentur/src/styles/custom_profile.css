@@ -163,6 +163,21 @@
     transform: scale(1.05);
 }
 
+.onefrontpage_image {
+    transition: transform 0.5s;
+}
+
+.onefrontpage_image:hover {
+    transform: scale(1.05);
+}
+
+#imagewhenmm {
+    display: none;
+}
+#description {
+    display: none;
+}
+
 
 /* mobile phone mode */
 
@@ -181,5 +196,25 @@
         /* margin-top: -20%; */
         color: #022e61;
         font-size: 16px;
+    }
+    #imagewhenmm {
+        display: block; /* Display the image on mobile devices */
+    }
+    #tohidewhemmm {
+        display: none;
+    }
+    #cenlogo {
+        height: 200px;
+        border-radius: 25px;
+    }
+    #segmentWelcome {
+        /* background-color: #fafafa; */
+    }
+    #description {
+        padding-top: 10px;
+        color: #f39965;
+        display: block;
+        text-align: left;
+        /* text-transform: uppercase; */
     }
 }

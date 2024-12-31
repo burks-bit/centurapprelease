@@ -4,38 +4,44 @@ import { apiUrl } from "../services/BackendAPIUrl";
 
 export default function Login() {
 
-    console.log(apiUrl);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-  useEffect(() => {
-    const isLoggedIn = localStorage.getItem("isLoggedIn");
-    if (isLoggedIn) {
-        window.location.href = "/centurmanagement/admin-dashboard";
-    }
-    // to put if not logged out then redirect to Login.
-    // code below has infinite redirect.
-    // to refract code
-    // else {
-    //   window.location.href = "/centurmanagement/admin-login";
-    //   exit
-    // }
-  }, []);
+  //   useEffect(() => {
+  //     const isLoggedIn = localStorage.getItem("userData");
+  //     if (!isLoggedIn) {
+  //         window.location.href = "/centurmanagement/admin-login";
+  //     }
+  // }, []);
 
+  // const handleLogin = () => {
+  //       axios
+  //       .post(apiUrl+"api/login", { email, password })
+  //       .then((response) => {
+  //           console.log(email+password);
+  //           console.log("Login successful:", response.data);
+  //           window.location.href = "/centurmanagement/admin-dashboard";
+  //       })
+  //       .catch((error) => {
+  //           // Handle error
+  //           console.error("Login error:", error);
+  //           alert("Login failed. Please try again.");
+  //       });
+  // };
   const handleLogin = () => {
-        axios
-        .post(apiUrl+"api/login", { email, password })
-        .then((response) => {
-            console.log(email+password);
-            console.log("Login successful:", response.data);
-            window.location.href = "/centurmanagement/admin-dashboard";
-        })
-        .catch((error) => {
-            // Handle error
-            console.error("Login error:", error);
-            alert("Login failed. Please try again.");
-        });
+    axios
+    .post(apiUrl + "api/login", { email, password })
+    .then((response) => {
+
+        localStorage.setItem('userData', JSON.stringify(response.data));
+        window.location.href = "/centurmanagement/admin-dashboard";
+    })
+    .catch((error) => {
+        console.error("Login error:", error);
+        alert("Login failed. Please try again.");
+    });
   };
+
 
   return (
     <div

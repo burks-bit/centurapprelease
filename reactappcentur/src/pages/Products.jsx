@@ -30,7 +30,9 @@ export default function Products(){
         <div>
             <Menu />
             <div className='ui container'>
-                <h1 className='products_h1'><Icon name='tags' size='large' color='green' /> Products</h1>
+                <h1 className='products_h1'>
+                    {/* <Icon name='tags' size='large' color='green' /> */}
+                    Products</h1>
                 <p>
                 Explore our wide range of high-quality products designed to meet your needs. From innovative solutions to everyday essentials, we have something for everyone. Whether you're a business looking to streamline operations or an individual seeking top-notch products, we've got you covered. Browse our offerings below and discover what sets us apart.
                 </p>

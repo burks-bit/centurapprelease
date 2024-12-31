@@ -47,7 +47,15 @@ class CustomController extends Controller
         $visions = DB::table('visions')->where('enabled', 1)->get();
         $testimonials = DB::table('testimonials')->get();
         $testimonialswithlimit = DB::table('testimonials')->limit(3)->get();
-        
+        // $firstId = DB::table('testimonials')->min('id');
+        // $lastId = DB::table('testimonials')->max('id');
+
+        // $randomId = rand($firstId, $lastId);
+
+        // $testimonialswithlimit = DB::table('testimonials')
+        //         ->whereBetween('id', [$randomId, $randomId + 2])
+        //         ->get();
+
         $webdatas = array();
         foreach($headers as $headerkey => $header){
             
@@ -77,7 +85,16 @@ class CustomController extends Controller
 
     public function getproducts(){
 
-        $products = DB::table('products')->where('enabled', 1)->limit(4)->get();
+        // Get the first and last ID from the database
+        $firstId = DB::table('products')->min('id');
+        $lastId = DB::table('products')->max('id');
+
+        // Generate a random number between the first and last IDs
+        $randomId = rand($firstId, $lastId);
+        $products = Product::whereBetween('id', [$randomId, $randomId + 3])->where('enabled', 1)->get();
+        // Log::info($products);
+
+        // $products = DB::table('products')->where('enabled', 1)->limit(4)->get();
         
         return response()->json([
             'status' => 'success',
@@ -86,8 +103,18 @@ class CustomController extends Controller
     }
 
     public function getclients(){
+                
+        $firstId = DB::table('products')->min('id');
+        $lastId = DB::table('products')->max('id');
 
-        $clients = DB::table('clients')->where('enabled', 1)->limit(4)->get();
+        $randomId = rand($firstId, $lastId);
+
+        $clients = DB::table('clients')
+                ->where('enabled', 1)
+                ->whereBetween('id', [$randomId, $randomId + 3])
+                ->get();
+
+        // $clients = DB::table('clients')->where('enabled', 1)->limit(4)->get();
         
         return response()->json([
             'status' => 'success',
@@ -716,18 +743,14 @@ class CustomController extends Controller
 
     public function addnewmgmttestimonials(Request $request){
 
-        // Create a new Career instance
         $testimonial = new Testimonial();
         $testimonial->testimonial_author = $request->input('testimonial_author');
         $testimonial->testimonial_author_designation = $request->input('testimonial_author_designation');
         $testimonial->testimonial_author_gender = $request->input('testimonial_author_gender');
         $testimonial->testimonial_feedback = $request->input('testimonial_feedback');
         $testimonial->enabled = $request->input('enabled') ? 1 : 0;
-
-        // Save the career
         $testimonial->save();
 
-        // Optionally, you can return a response indicating success
         return response()->json(['message' => 'Tstimonial added successfully'], 201);
     }
 
@@ -739,5 +762,34 @@ class CustomController extends Controller
             'status' => 'success',
             'testimonial' => $testimonials
         ]);
+    }
+
+    public function updatemgmttestimonials(Request $request, $id){
+
+        $testimonial = Testimonial::findOrFail($id); 
+        $testimonial->testimonial_author = $request->input('testimonial_author');
+        $testimonial->testimonial_author_designation = $request->input('testimonial_author_designation');
+        $testimonial->testimonial_author_gender = $request->input('testimonial_author_gender');
+        $testimonial->testimonial_feedback = $request->input('testimonial_feedback');
+        $testimonial->enabled = $request->input('enabled') ? 1 : 0;
+
+        if($testimonial->save()) {
+            return response()->json([
+                'status' => 'success'
+            ]);
+        } else {
+            
+        }
+    }
+
+    public function deletemgmttestimonial($id)
+    {
+        try {
+            $testimonial = Testimonial::findOrFail($id);
+            $testimonial->delete();
+            return response()->json(['message' => 'Testimonial deleted successfully'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Failed to delete Testimonial', 'error' => $e->getMessage()], 500);
+        }
     }
 }

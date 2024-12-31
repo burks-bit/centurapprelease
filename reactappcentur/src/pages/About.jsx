@@ -33,7 +33,9 @@ export default function About(){
         <div>
             <Menu />
             <div className="ui container">
-                <h1 className="about_h1"><Icon name='info circle' size='large' color='green' /> About Us</h1>
+                <h1 className="about_h1">
+                    {/* <Icon name='info circle' size='large' color='green' /> */}
+                    About Us</h1>
                 {/* Mission */}
                 <div className="ui two column stackable grid aboutMission">
                     <div className="column" style={{width: '50%'}}>

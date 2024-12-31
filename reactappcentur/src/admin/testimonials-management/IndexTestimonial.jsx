@@ -5,7 +5,8 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { apiUrl } from "../../services/BackendAPIUrl";
 // import AdminHeaderAdd from "./AdminHeaderAdd";
-import { Icon } from "semantic-ui-react";
+import { Icon, Image } from "semantic-ui-react";
+import AdminTestimonialAdd from "./AdminTestimonialAdd";
 
 export default function IndexTestimonial() {
     const [testimonialData, setTestimonial] = useState([]);
@@ -34,22 +35,31 @@ export default function IndexTestimonial() {
         fetTestimonials();
     }, []);
 
-    const handleEdit = (header) => {
-        setEditedTestimonial({ id: header.id, title: header.header_title, body: header.header_body, enabled: header.enabled });
+    const handleEdit = (testimonial) => {
+        setEditedTestimonial({
+            id: testimonial.id,
+            testimonial_author: testimonial.testimonial_author,
+            testimonial_author_designation: testimonial.testimonial_author_designation,
+            testimonial_author_gender: testimonial.testimonial_author_gender,
+            testimonial_feedback: testimonial.testimonial_feedback,
+            enabled: testimonial.enabled
+        });
         setEditMode(true);
     }
 
     const handleSave = async () => {
         try {
             setSaving(true);
-            await axios.put(apiUrl + `api/updatemgmtheader/${editedTestimonial.id}`, {
-                header_title: editedTestimonial.title,
-                header_body: editedTestimonial.body,
+            await axios.put(apiUrl + `api/updatemgmttestimonials/${editedTestimonial.id}`, {
+                testimonial_author: editedTestimonial.testimonial_author,
+                testimonial_author_designation: editedTestimonial.testimonial_author_designation,
+                testimonial_author_gender: editedTestimonial.testimonial_author_gender,
+                testimonial_feedback: editedTestimonial.testimonial_feedback,
                 enabled: editedTestimonial.enabled
             });
 
-            const response = await axios.get(apiUrl + 'api/getmgmtheader');
-            setTestimonial(response.data.header);
+            const response = await axios.get(apiUrl + 'api/getmgmttestimonials');
+            setTestimonial(response.data.testimonial);
 
             setEditMode(false);
             setEditedTestimonial({ id: null, title: '', body: '', enabled: false });
@@ -68,7 +78,7 @@ export default function IndexTestimonial() {
 
     const handleDelete = async (id) => {
         try {
-            await axios.post(apiUrl + `api/deletemgmtheader/${id}`);
+            await axios.post(apiUrl + `api/deletemgmttestimonial/${id}`);
             const updatedHeaders = testimonialData.filter(header => header.id !== id);
             setTestimonial(updatedHeaders);
         } catch (error) {
@@ -112,20 +122,38 @@ export default function IndexTestimonial() {
                         <table className="ui table bordered">
                             <thead>
                                 <tr>
-                                    <th style={{ width: '25%' }}>Author</th>
+                                    <th colSpan={2} style={{ width: '25%' }}>Author</th>
                                     <th style={{ width: '50%' }}>Testimonial</th>
                                     <th style={{ width: '25%' }}>Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {testimonialData.map(header => (
-                                    <tr key={header.id}>
+                                {testimonialData.map(testimonial => (
+                                    <tr key={testimonial.id}>
+                                        <td>
+                                            {testimonial.testimonial_author_gender === 'Female' ? (
+                                                <Image src={apiUrl+`web_images/newfemale.jpg`} floated='right' size='tiny' alt="newfemale.jpg" />
+                                            ) : (
+                                                <Image src={apiUrl+`web_images/newmale.jpg`} floated='right' size='tiny' alt="newmale.jpg" />
+                                            )}
+                                        </td>
                                         <td style={{ width: '25%' }}>
-                                            {editMode && editedTestimonial.id === header.id ?
+                                            {editMode && editedTestimonial.id === testimonial.id ?
                                                 <form className="ui form">
                                                     <input
-                                                        value={editedTestimonial.title}
-                                                        onChange={(e) => setEditedTestimonial({ ...editedTestimonial, title: e.target.value })}
+                                                        value={editedTestimonial.testimonial_author}
+                                                        onChange={(e) => setEditedTestimonial({ ...editedTestimonial, testimonial_author: e.target.value })}
+                                                        style={{marginBottom: '10px'}}
+                                                    />
+                                                    <select onChange={(e) => setEditedTestimonial({ ...editedTestimonial, testimonial_author_gender: e.target.value })} style={{marginBottom: '10px'}}>
+                                                        <option value="">Select Gender</option>
+                                                        <option value="Female" selected={editedTestimonial.testimonial_author_gender === "Female"}>Female</option>
+                                                        <option value="Male" selected={editedTestimonial.testimonial_author_gender === "Male"}>Male</option>
+                                                    </select>
+                                                    <input
+                                                        value={editedTestimonial.testimonial_author_designation}
+                                                        onChange={(e) => setEditedTestimonial({ ...editedTestimonial, testimonial_author_designation: e.target.value })}
+                                                        style={{marginBottom: '10px'}}
                                                     />
                                                     <div className="ui checkbox">
                                                         <input
@@ -139,23 +167,23 @@ export default function IndexTestimonial() {
                                                 </form>
                                                 :
                                                 <div className="field">
-                                                    <p>{header.header_title}</p>
-                                                    <p>Status: {header.enabled === 1 ? "Enabled" : "Disabled"}</p>
+                                                    <p style={{fontWeight: 'bold'}}>{testimonial.testimonial_author}, {testimonial.testimonial_author_designation}</p>
+                                                    <p>Status: {testimonial.enabled === 1 ? "Enabled" : "Disabled"}</p>
                                                 </div>
                                             }
                                         </td>
                                         <td style={{ width: '50%' }}>
-                                            {editMode && editedTestimonial.id === header.id ?
+                                            {editMode && editedTestimonial.id === testimonial.id ?
                                                 <ReactQuill
-                                                    value={editedTestimonial.body}
-                                                    onChange={(value) => setEditedTestimonial({ ...editedTestimonial, body: value })}
+                                                    value={editedTestimonial.testimonial_feedback}
+                                                    onChange={(value) => setEditedTestimonial({ ...editedTestimonial, testimonial_feedback: value })}
                                                 style={{height: '100%'}}/>
                                                 :
-                                                <div dangerouslySetInnerHTML={{ __html: header.header_body }} />
+                                                <div dangerouslySetInnerHTML={{ __html: testimonial.testimonial_feedback }} />
                                             }
                                         </td>
                                         <td style={{ width: '25%' }}>
-                                            {editMode && editedTestimonial.id === header.id ?
+                                            {editMode && editedTestimonial.id === testimonial.id ?
                                                 <div>
                                                     <button className="ui button primary tiny" onClick={handleSave}>
                                                         <Icon name="save"/> {saving ? "Saving..." : "Save"}
@@ -165,9 +193,9 @@ export default function IndexTestimonial() {
                                                 </div>
                                                 :
                                                 <div>
-                                                    <button className="ui button tiny" onClick={() => handleEdit(header)}><Icon name="edit" />Edit</button>
+                                                    <button className="ui button tiny" onClick={() => handleEdit(testimonial)}><Icon name="edit" />Edit</button>
                                                     &ensp;
-                                                    <button className="ui button tiny red" onClick={() => handleDelete(header.id)}><Icon name="trash" /> Delete</button>
+                                                    <button className="ui button tiny red" onClick={() => handleDelete(testimonial.id)}><Icon name="trash" /> Delete</button>
                                                 </div>
                                             }
                                         </td>
@@ -180,7 +208,7 @@ export default function IndexTestimonial() {
                 )}
                 {showAddForm && (
                     <div>
-                        {/* <AdminHeaderAdd onCareerAdded={handleCareerAdded} /> */}
+                        <AdminTestimonialAdd onCareerAdded={handleCareerAdded} />
                         <br />
                         <button className="ui button tiny" onClick={handleCancel}>
                             <Icon name="cancel"/> Cancel

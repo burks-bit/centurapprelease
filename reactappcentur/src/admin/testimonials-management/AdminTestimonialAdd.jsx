@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import Layout from "../../layout/Layout";
-import spinner from "../../web_images/spinner.svg"; // Path to your spinner image
 import { apiUrl } from "../../services/BackendAPIUrl";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
@@ -9,26 +7,28 @@ import { Icon } from 'semantic-ui-react';
 
 export default function AdminTestimonialAdd(){
     
-    const [header, setHeader] = useState({
-        header_title: '',
-        header_body: '',
-        enabled: '',
+    const [testimonial, setTestimonial] = useState({
+        testimonial_author: '',
+        testimonial_author_designation: '',
+        testimonial_author_gender: '',
+        testimonial_feedback: '',
+        enabled: false
     });
 
     const [loading, setLoading] = useState(false);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setHeader(prevState => ({
+        setTestimonial(prevState => ({
             ...prevState,
             [name]: value
         }));
     };
 
     const handleHeaderbodyChange = (value) => {
-        setHeader(prevState => ({
+        setTestimonial(prevState => ({
             ...prevState,
-            header_body: value
+            testimonial_feedback: value
         }));
     };
 
@@ -36,7 +36,7 @@ export default function AdminTestimonialAdd(){
         e.preventDefault();
         setLoading(true);
         try {
-            await axios.post(`${apiUrl}api/addnewmgmtheader`, header);
+            await axios.post(`${apiUrl}api/addnewmgmttestimonials`, testimonial);
             window.location.reload();
         } catch (error) {
             console.error('Error adding header:', error);
@@ -50,19 +50,44 @@ export default function AdminTestimonialAdd(){
                 <h4>Header Management > Add Header</h4>
                 <form onSubmit={handleSubmit} className='ui form'>
                     <div>
-                        <label>Header Title:</label>
+                        <label>Author:</label>
                         <input
                             type="text"
-                            name="header_title"
-                            value={header.header_title}
+                            name="testimonial_author"
+                            value={testimonial.testimonial_author}
                             onChange={handleChange}
                             required
                         />
                     </div>
                     <div>
-                        <label>Header Body:</label>
+                        <label>Author Designation:</label>
+                        <input
+                            type="text"
+                            name="testimonial_author_designation"
+                            value={testimonial.testimonial_author_designation}
+                            onChange={handleChange}
+                            required
+                        />
+                    </div>
+                    <div>
+                        <label>Gender:</label>
+                        <select name="testimonial_author_gender" onChange={handleChange} value={testimonial.testimonial_author_gender}>
+                            <option selected>Select Gender</option>
+                            <option value='Male'>Male</option>
+                            <option value='Female'>Female</option>
+                        </select>
+                        {/* <input
+                            type="text"
+                            name="testimonial_author_gender"
+                            value={testimonial.testimonial_author_gender}
+                            onChange={handleChange}
+                            required
+                        /> */}
+                    </div>
+                    <div>
+                        <label>Feedback:</label>
                         <ReactQuill
-                            value={header.header_body}
+                            value={testimonial.testimonial_feedback}
                             onChange={handleHeaderbodyChange}
                         />
                     </div>
@@ -72,8 +97,8 @@ export default function AdminTestimonialAdd(){
                             <input
                                 type="checkbox"
                                 name="enabled"
-                                checked={header.enabled === '1'} // Assuming '1' represents true and '0' represents false
-                                onChange={(e) => setHeader(prevState => ({ ...prevState, enabled: e.target.checked ? '1' : '0' }))}
+                                checked={testimonial.enabled === '1'} // Assuming '1' represents true and '0' represents false
+                                onChange={(e) => setTestimonial(prevState => ({ ...prevState, enabled: e.target.checked ? '1' : '0' }))}
                             />
                             <label>Enabled</label>
                         </div>

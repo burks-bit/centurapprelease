@@ -7,6 +7,10 @@ use Illuminate\Http\Request;use Illuminate\Support\Facades\Auth;
   
 class UserController extends Controller
 {
+    public function csrfCookie(Request $request)
+    {
+        return response()->json(['csrf_token' => csrf_token()]);
+    }
     /**
      * Display a listing of the resource.
      *

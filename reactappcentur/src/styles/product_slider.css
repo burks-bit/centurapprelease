@@ -18,6 +18,8 @@
 }
 
 .slide img {
+    /* width: 30%;
+    height: 30%; */
     max-width: 100%;
     max-height: 200px;
     border-radius: 5px;
@@ -36,9 +38,9 @@
 }
 
 .slide-title {
-    color:#e6e6e6;
+    color:#2f66a4;
     margin-top: 10px;
-    font-size: 18px;
+    font-size: 28px;
     margin-bottom: 5px;
 }
 
@@ -67,4 +69,12 @@
 
 .next {
     right: 0;
+}
+
+@media only screen and (max-width: 768px){
+    .slide img {
+        max-width: 100%;
+        max-height: 200px;
+        border-radius: 5px;
+    }
 }
